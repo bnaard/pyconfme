@@ -90,5 +90,19 @@ t = "pytest"
 covtest = "coverage run -m pytest"
 covreport = "coverage html"
 ct = ["covtest", "covreport"]
-db = ["mike deploy $_VERSION", "mike set-default $_VERSION", "mike alias $_VERSION latest"]
-d = ["mike serve"]
+db = [
+        {cmd = "mike deploy $_VERSION"}, 
+        {cmd = "mike set-default $_VERSION"}, 
+        {cmd = "mike alias $_VERSION latest"}
+    ]
+d = "mike serve"
+clean = """
+rm -rf .coverage
+       html_cov
+       .mypy_cache
+       .pytest_cache
+       .hypothesis
+       dist
+       site
+       ./**/__pycache__
+"""

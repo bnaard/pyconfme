@@ -1,3 +1,3 @@
 # Factory Utilities
 
-::: pycmdlineapp_groundwork.factory.Factory
+::: pyconfme.factory.Factory

@@ -12,9 +12,9 @@ Please refer to our [Security Policy](https://github.com/bnaard/pycmdlineapp-gro
 
 ## Pull Requests
 
-It's simple to get started and create a Pull Request. *pycmdlineapp_groundwork* has few dependencies, doesn't require compiling and tests don't need access to databases, etc.
+It's simple to get started and create a Pull Request. *pyconfme* has few dependencies, doesn't require compiling and tests don't need access to databases, etc.
 
-*pycmdlineapp_groundwork* is released regularly so you should see your improvements release in a matter of weeks.
+*pyconfme* is released regularly so you should see your improvements release in a matter of weeks.
 
 !!! note
     Unless your change is trivial (typo, docs tweak etc.), please create an issue to discuss the change before
