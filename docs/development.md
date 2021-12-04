@@ -281,9 +281,9 @@ poetry add --dev poethepoet pylint black mypy pytest pytest-cov pytest-html hypo
 ```
 
 !!! note ""
-    The above commands install all dependencies inside the VS Code container. Also the virtualenv resides inside the container. This is to encapsulate 
+    The above commands install all dependencies inside the VS Code container. Also the virtualenv resides inside the container. This is to encapsulate
     the dependencies, specifically to not clutter the host system with large directory trees. However, this requires re-installing all
-    dependencies with `poetry init`, if you rebuild the container, which may take long. If you prefer to keep the dependencies on the 
+    dependencies with `poetry init`, if you rebuild the container, which may take long. If you prefer to keep the dependencies on the
     host-system, you need to create the virtualenv managed by Poetry inside the project's directory. To instruct Poetry to do so,
     run `poetry config virtualenvs.in-project true`. See [Poetry documentation](https://python-poetry.org/docs/configuration/#virtualenvsin-project).
 
@@ -291,7 +291,7 @@ poetry add --dev poethepoet pylint black mypy pytest pytest-cov pytest-html hypo
 
 To configure all development dependencies, add to the `pyproject.toml` file the following sections.
 
-Configuring _pytest_ output formatting and register plugins (_doctest_-plugin to test code in Python docstrings 
+Configuring _pytest_ output formatting and register plugins (_doctest_-plugin to test code in Python docstrings
 and _coverage_ plugin to measure test-coverage).
 
 ```toml
@@ -484,7 +484,7 @@ extra_javascript:
   - https://unpkg.com/mermaid/dist/mermaid.min.js
 ```
 
-Manually add the JavaScript and CSS static assets for [asciinema-player](https://github.com/asciinema/asciinema-player) as 
+Manually add the JavaScript and CSS static assets for [asciinema-player](https://github.com/asciinema/asciinema-player) as
 it is not distrubuted on a CDN at the time of writing this.
 
 - Download `asciinema-player.min.js` from [Asciinema releases page](https://github.com/asciinema/asciinema-player/releases) and store in `.\docs\javascripts`
@@ -649,9 +649,6 @@ mike serve
 
 !!! note ""
     Instead of running `mike deploy` manually, you can use the _poethepoet_ actions described earlier.
-
-
-
 
 Create a test-build of the documentation by changing into the virtual-environment and then using the _poe_ build task for the documentation.
 
