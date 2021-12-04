@@ -1,0 +1,1194 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Configuration options with multiple config-files and command-line made easy when creating applications with [Python Click](https://click.palletsprojects.com).">
+      
+      
+      
+        <link rel="canonical" href="https://bnaard.github.io/pyconfme/v0.0.0/development/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.0.4">
+    
+    
+      
+        <title>Development - pyconfme</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.2a4617e2.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.9204c3b2.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#2094f3">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../stylesheets/asciinema-player.css">
+    
+    <script>function __md_scope(e,t,_){return new URL(_||(t===localStorage?"..":".."),location).pathname+"."+e}function __md_get(e,t=localStorage,_){return JSON.parse(t.getItem(__md_scope(e,t,_)))}function __md_set(e,t,_=localStorage,o){try{_.setItem(__md_scope(e,_,o),JSON.stringify(t))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#development" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+    Work in progress! Not yet released!
+
+          </div>
+        </aside>
+      
+    </div>
+    
+      <div data-md-component="outdated" hidden>
+        <aside class="md-banner md-banner--warning">
+          
+        </aside>
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="pyconfme" class="md-header__button md-logo" aria-label="pyconfme" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            pyconfme
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Development
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/bnaard/pyconfme/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    bnaard/oyconfme
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="pyconfme" class="md-nav__button md-logo" aria-label="pyconfme" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    pyconfme
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/bnaard/pyconfme/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    bnaard/oyconfme
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Development
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Development
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#development-computer-setup-example" class="md-nav__link">
+    Development Computer Setup (Example)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#versioning" class="md-nav__link">
+    Versioning
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#branching-strategy" class="md-nav__link">
+    Branching Strategy
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#github-project-setup" class="md-nav__link">
+    Github Project Setup
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#local-working-environment" class="md-nav__link">
+    Local Working Environment
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-tool" class="md-nav__link">
+    Build Tool
+  </a>
+  
+    <nav class="md-nav" aria-label="Build Tool">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general" class="md-nav__link">
+    General
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-management" class="md-nav__link">
+    Version Management
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    Setup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    Configuration
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    Documentation
+  </a>
+  
+    <nav class="md-nav" aria-label="Documentation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general_1" class="md-nav__link">
+    General
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setup_1" class="md-nav__link">
+    Setup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#github-hosting" class="md-nav__link">
+    Github Hosting
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#github-actions" class="md-nav__link">
+    Github Actions
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#development-computer-setup-example" class="md-nav__link">
+    Development Computer Setup (Example)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#versioning" class="md-nav__link">
+    Versioning
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#branching-strategy" class="md-nav__link">
+    Branching Strategy
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#github-project-setup" class="md-nav__link">
+    Github Project Setup
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#local-working-environment" class="md-nav__link">
+    Local Working Environment
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-tool" class="md-nav__link">
+    Build Tool
+  </a>
+  
+    <nav class="md-nav" aria-label="Build Tool">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general" class="md-nav__link">
+    General
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-management" class="md-nav__link">
+    Version Management
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    Setup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    Configuration
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    Documentation
+  </a>
+  
+    <nav class="md-nav" aria-label="Documentation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general_1" class="md-nav__link">
+    General
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setup_1" class="md-nav__link">
+    Setup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#github-hosting" class="md-nav__link">
+    Github Hosting
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#github-actions" class="md-nav__link">
+    Github Actions
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+<a href="https://github.com/bnaard/pyconfme/edit/master/docs/development.md" title="Edit this page" class="md-content__button md-icon">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+</a>
+
+
+<!-- markdownlint-disable-file MD024 -->
+
+<h1 id="development">Development<a class="headerlink" href="#development" title="Permanent link">🔗</a></h1>
+<h2 id="development-computer-setup-example">Development Computer Setup (Example)<a class="headerlink" href="#development-computer-setup-example" title="Permanent link">🔗</a></h2>
+<p>This section describes an example development computer environment. The environment as described below has been used in the initial setup of the project.</p>
+<p>We assume a Mac-computer with latest macOS installed (at the time of writing this it's macOS Big Sur 11.6.1). On this computer, the following tools could be used:</p>
+<ol>
+<li><em>Docker Desktop</em> &gt;4.2.0 (70708) for macOS from <a href="https://hub.docker.com/?overlay=onboarding">Docker Hub</a>. A very good <a href="https://docker-curriculum.com">Docker tutorial</a> may help in using Docker.</li>
+<li><em>Git</em> &gt;2.21.0 for macOS from <a href="https://git-scm.com/download/mac">git homepage</a></li>
+<li><em>iTerm2</em> &gt;3.4.12 as terminal from <a href="https://www.iterm2.com">iterm2 homepage</a></li>
+<li><em>Firefox</em> &gt;94.0.1 as browser from <a href="https://www.mozilla.org/de/firefox/all/#product-desktop-release">Mozilla website</a></li>
+<li><em>Visual Studio Code</em> (VS Code) &gt;1.62.3 as editor from <a href="https://code.visualstudio.com">VSC homepage</a></li>
+<li><em>Visual Studio Code</em> plugins:<ul>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=ms-python.python">Python</a></li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=HookyQR.beautify">Beautify</a></li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=CoenraadS.bracket-pair-colorizer-2">Bracket Pair Colorizer 2</a></li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker">Docker</a></li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens">GitLens</a></li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=nobuhito.printcode">PrintCode</a></li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers">Remote - Containers</a></li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=Gruntfuggly.todo-tree">Todo Tree</a></li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml">YAML</a></li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint">markdownlint</a></li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=humao.rest-client">REST Client</a></li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=stkb.rewrap">Rewrap</a></li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=vscode-icons-team.vscode-icons">vscode-icons</a></li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=tamasfe.even-better-toml">Even Better TOML</a></li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=humao.rest-client">REST Client</a></li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=vstirbu.vscode-mermaid-preview">Markdown Preview Mermaid Support</a></li>
+</ul>
+</li>
+</ol>
+<p>Check diagramming support with <a href="https://mermaid-js.github.io/mermaid/#/">Mermaid</a> for markdown (in VS Code preview) by testing with the following mardown code:  </p>
+<!-- markdownlint-disable MD033 -->
+<pre>```mermaid
+graph TD;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
+```</pre>
+<!-- markdownlint-enable MD033 -->
+
+<div class="mermaid">graph TD;
+    A--&gt;B;
+    A--&gt;C;
+    B--&gt;D;
+    C--&gt;D;</div>
+<p>Preview the markdown in VSCode on macOS eihter by pressing <code>Command+Shift+V</code> (on Windows <code>CTRL+Shift+V</code>) or by showing side-by-side with <code>Command+K V</code> (on Windows <code>CTRL+K V</code>).</p>
+<p>Note: A good <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Markdown Cheatsheet</a>.</p>
+<h2 id="versioning">Versioning<a class="headerlink" href="#versioning" title="Permanent link">🔗</a></h2>
+<p>Semantic versioning is used, following the rules of <a href="https://semver.org/">SemVer</a>.</p>
+<p>Specifically, the following applies:</p>
+<ul>
+<li>Development phase starts with 0.1.0 and increments minor and patch until a first stable, production-ready version is reached.</li>
+<li>Git tags are prefixed with "v" in this project, so “v1.2.3” is a tag name and the semantic version is “1.2.3”</li>
+</ul>
+<h2 id="branching-strategy">Branching Strategy<a class="headerlink" href="#branching-strategy" title="Permanent link">🔗</a></h2>
+<p>The branching strategy tries to be as lean as possible, but still allow for a structured approach for as small team. It follows the following rules:</p>
+<ul>
+<li>"main" branch always contains the latest official stable, production-ready release; it always contains the release path of the highest major release according to semantic versioning.</li>
+<li>For each major release, a development branch exists, using the naming "dev-x.0.0", where x corresponds to the release branch developed for. The first development branch is "dev-0.0.0" until the first major release is done ("1.0.0"). Then, the development branch "dev-1.0.0" is created, where development continues.</li>
+<li>From version "1.0.0" onwards, all releases are merged into the "main" branch, but only for the latest development branch. Example: If "dev-1.0.0" and "dev-2.0.0" exist, where "dev-1.0.0" is an older release, which might still be undo support with security patches, "dev-2.0.0" represents the latest release, whose release are merged to "main".</li>
+</ul>
+<div class="mermaid">graph LR;
+    subgraph main
+    main0((0.0.0)) ------ main1((0.1.0)) ---- main2((1.0.0))  ---- main3((1.0.1)) ---- main4((1.1.0)) ---- main5((2.0.0));
+    end
+    subgraph dev-0.0.0
+    dev0(( )) --- dev1(( )) --- dev2(( )) --- dev3(( )) --- dev4(( )) --- dev5(( ));
+    end
+    subgraph dev-1.0.0
+    dev10(( )) --- dev11(( )) --- dev12(( )) --- dev13(( )) --- dev14(( )) --- dev15(( ));
+    end
+    main0 --- dev0;
+    dev3 --- main1;
+    dev5 --- main2;
+    main2 --- dev10;
+    dev11 --- main3;
+    dev12 --- main4;
+    dev15 --- main5;
+</div>
+<h2 id="github-project-setup">Github Project Setup<a class="headerlink" href="#github-project-setup" title="Permanent link">🔗</a></h2>
+<p>On GitHub's webinterface, the project <code>pyconfme</code> was created as fresh project with minimal initial files: <code>.gitignore</code> (GitHub's template for Python), License and Readme-file.</p>
+<p>In GitHub's webinterface, the branch "dev-0.0.0" was created from "main"-branch. All initial development takes place in "dev-0.0.0" until the first stable release.</p>
+<h2 id="local-working-environment">Local Working Environment<a class="headerlink" href="#local-working-environment" title="Permanent link">🔗</a></h2>
+<p>In your projects' folder, check out the remote git-repository:</p>
+<div class="highlight"><pre><span></span><code>git clone https://github.com/bnaard/pyconfme.git
+</code></pre></div>
+<p>Then switch into current development branch (here as an example the branch <code>dev-0.0.0</code>):</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span> pyconfme
+git checkout dev-0.0.0 
+</code></pre></div>
+<p>Then open the project's folder in VSCode with the function "Open in Container...". The first time, the container is opened, choose the following initial options:</p>
+<ul>
+<li>Python 3.9 (OS "bullseye" at the time of writing)</li>
+<li>no nodejs environment</li>
+<li>no other additional software added to the image</li>
+</ul>
+<p>Then set up the main configuration files of VS Code as follows and run "Rebuild Container...".</p>
+<p>Dockerfile</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># [Choice] Python version (use -bullseye variants on local arm64/Apple Silicon): 3, 3.10, 3.9, 3.8, 3.7, 3.6, 3-bullseye, 3.10-bullseye, 3.9-bullseye, 3.8-bullseye, 3.7-bullseye, 3.6-bullseye, 3-buster, 3.10-buster, 3.9-buster, 3.8-buster, 3.7-buster, 3.6-buster</span>
+ARG <span class="nv">VARIANT</span><span class="o">=</span><span class="s2">&quot;3.9-bullseye&quot;</span>
+FROM mcr.microsoft.com/vscode/devcontainers/python:0-<span class="si">${</span><span class="nv">VARIANT</span><span class="si">}</span>
+
+<span class="c1"># Install dependency/virtual-environment-management tool</span>
+RUN pip install poetry
+RUN poetry config virtualenvs.create <span class="nb">true</span>
+</code></pre></div>
+<p>devcontainer.json</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Python 3&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;build&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;dockerfile&quot;</span><span class="p">:</span> <span class="s2">&quot;Dockerfile&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;context&quot;</span><span class="p">:</span> <span class="s2">&quot;..&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;args&quot;</span><span class="p">:</span> <span class="p">{</span> 
+            <span class="o">//</span> <span class="n">Update</span> <span class="s1">&#39;VARIANT&#39;</span> <span class="n">to</span> <span class="n">pick</span> <span class="n">a</span> <span class="n">Python</span> <span class="n">version</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">3.10</span><span class="p">,</span> <span class="mf">3.9</span><span class="p">,</span> <span class="mf">3.8</span><span class="p">,</span> <span class="mf">3.7</span><span class="p">,</span> <span class="mf">3.6</span>
+            <span class="o">//</span> <span class="n">Append</span> <span class="o">-</span><span class="n">bullseye</span> <span class="ow">or</span> <span class="o">-</span><span class="n">buster</span> <span class="n">to</span> <span class="n">pin</span> <span class="n">to</span> <span class="n">an</span> <span class="n">OS</span> <span class="n">version</span><span class="o">.</span>
+            <span class="o">//</span> <span class="n">Use</span> <span class="o">-</span><span class="n">bullseye</span> <span class="n">variants</span> <span class="n">on</span> <span class="n">local</span> <span class="n">on</span> <span class="n">arm64</span><span class="o">/</span><span class="n">Apple</span> <span class="n">Silicon</span><span class="o">.</span>
+            <span class="s2">&quot;VARIANT&quot;</span><span class="p">:</span> <span class="s2">&quot;3.9-bullseye&quot;</span><span class="p">,</span>
+            <span class="o">//</span> <span class="n">Options</span>
+            <span class="s2">&quot;NODE_VERSION&quot;</span><span class="p">:</span> <span class="s2">&quot;none&quot;</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+
+    <span class="o">//</span> <span class="n">Set</span> <span class="o">*</span><span class="n">default</span><span class="o">*</span> <span class="n">container</span> <span class="n">specific</span> <span class="n">settings</span><span class="o">.</span><span class="n">json</span> <span class="n">values</span> <span class="n">on</span> <span class="n">container</span> <span class="n">create</span><span class="o">.</span>
+    <span class="s2">&quot;settings&quot;</span><span class="p">:</span> <span class="p">{</span> 
+        <span class="s2">&quot;python.defaultInterpreterPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/usr/local/bin/python&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;python.linting.enabled&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+        <span class="s2">&quot;python.linting.pylintEnabled&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+        <span class="s2">&quot;python.formatting.autopep8Path&quot;</span><span class="p">:</span> <span class="s2">&quot;/usr/local/py-utils/bin/autopep8&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;python.formatting.blackPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/usr/local/py-utils/bin/black&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;python.formatting.yapfPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/usr/local/py-utils/bin/yapf&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;python.linting.banditPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/usr/local/py-utils/bin/bandit&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;python.linting.flake8Path&quot;</span><span class="p">:</span> <span class="s2">&quot;/usr/local/py-utils/bin/flake8&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;python.linting.mypyPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/usr/local/py-utils/bin/mypy&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;python.linting.pycodestylePath&quot;</span><span class="p">:</span> <span class="s2">&quot;/usr/local/py-utils/bin/pycodestyle&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;python.linting.pydocstylePath&quot;</span><span class="p">:</span> <span class="s2">&quot;/usr/local/py-utils/bin/pydocstyle&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;python.linting.pylintPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/usr/local/py-utils/bin/pylint&quot;</span>
+    <span class="p">},</span>
+
+    <span class="o">//</span> <span class="n">Add</span> <span class="n">the</span> <span class="n">IDs</span> <span class="n">of</span> <span class="n">extensions</span> <span class="n">you</span> <span class="n">want</span> <span class="n">installed</span> <span class="n">when</span> <span class="n">the</span> <span class="n">container</span> <span class="ow">is</span> <span class="n">created</span><span class="o">.</span>
+    <span class="s2">&quot;extensions&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;ms-python.python&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ms-python.vscode-pylance&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ms-azuretools.vscode-docker&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;tamasfe.even-better-toml&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;eamodio.gitlens&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;davidanson.vscode-markdownlint&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;humao.rest-client&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;gruntfuggly.todo-tree&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;redhat.vscode-yaml&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;bierner.markdown-mermaid&quot;</span>
+    <span class="p">],</span>
+
+    <span class="o">//</span> <span class="n">Use</span> <span class="s1">&#39;forwardPorts&#39;</span> <span class="n">to</span> <span class="n">make</span> <span class="n">a</span> <span class="nb">list</span> <span class="n">of</span> <span class="n">ports</span> <span class="n">inside</span> <span class="n">the</span> <span class="n">container</span> <span class="n">available</span> <span class="n">locally</span><span class="o">.</span>
+    <span class="s2">&quot;forwardPorts&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">8000</span><span class="p">],</span>
+
+    <span class="o">//</span> <span class="n">Use</span> <span class="s1">&#39;postCreateCommand&#39;</span> <span class="n">to</span> <span class="n">run</span> <span class="n">commands</span> <span class="n">after</span> <span class="n">the</span> <span class="n">container</span> <span class="ow">is</span> <span class="n">created</span><span class="o">.</span>
+    <span class="o">//</span> <span class="s2">&quot;postCreateCommand&quot;</span><span class="p">:</span> <span class="s2">&quot;pip3 install --user -r requirements.txt&quot;</span><span class="p">,</span>
+
+    <span class="o">//</span> <span class="n">Comment</span> <span class="n">out</span> <span class="n">connect</span> <span class="k">as</span> <span class="n">root</span> <span class="n">instead</span><span class="o">.</span> <span class="n">More</span> <span class="n">info</span><span class="p">:</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">aka</span><span class="o">.</span><span class="n">ms</span><span class="o">/</span><span class="n">vscode</span><span class="o">-</span><span class="n">remote</span><span class="o">/</span><span class="n">containers</span><span class="o">/</span><span class="n">non</span><span class="o">-</span><span class="n">root</span><span class="o">.</span>
+    <span class="s2">&quot;remoteUser&quot;</span><span class="p">:</span> <span class="s2">&quot;vscode&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="build-tool">Build Tool<a class="headerlink" href="#build-tool" title="Permanent link">🔗</a></h2>
+<h3 id="general">General<a class="headerlink" href="#general" title="Permanent link">🔗</a></h3>
+<p>The project's dependencies, build-chain and deployment to <a href="https://pypi.org/">PyPI</a> is managed with <a href="https://python-poetry.org/">Python Poetry</a>.</p>
+<ul>
+<li>Main project information is manged in file <code>pyproject.toml</code></li>
+<li>Dependencies to the production are added by <code>poetry add &lt;pypi-package-name&gt;</code> or removed by <code>poetry remove &lt;pypi-package-name&gt;</code></li>
+<li>Dependencies only needed for development are added by <code>poetry add --dev &lt;pypi-package-name&gt;</code> or removed by <code>poetry remove --dev &lt;pypi-package-name&gt;</code></li>
+</ul>
+<div class="admonition note">
+<p>In case of problems, it usually helps to manually delete the automatically generated <code>poetry.lock</code>-file and to run <code>poetry install</code> to reinstall all dependencies with recalculation of dependency tree.</p>
+</div>
+<h3 id="version-management">Version Management<a class="headerlink" href="#version-management" title="Permanent link">🔗</a></h3>
+<p>Versioning is managed also by <a href="https://python-poetry.org/">Python Poetry</a> using <a href="https://semver.org/lang/de/">SemVer</a>:</p>
+<ul>
+<li>Major version update: <code>poetry version major</code> (for large releases with completely new feature sets and/or breakting API)</li>
+<li>Minor version update: <code>poetry version minor</code> (for minor feature additions and/or non-breaking api changes)</li>
+<li>Patch version update: <code>poetry version patch</code> (for bugfixes, minor documentation updates)</li>
+</ul>
+<p>Though versioning is managed with <a href="https://python-poetry.org/">Python Poetry</a>, the version definition needs manual update in the following steps and locations:</p>
+<ol>
+<li>Major/Minor/Patch version update using one of the above <code>poetry version</code> commands</li>
+<li>Manual update of <code>pyconfme/__init__.py:__version__</code></li>
+<li>Manual update of command for rebuilding the documentation (only for preview locally, production versioning is handled in Github actions). See section <em>Documentation</em> below.</li>
+</ol>
+<h3 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">🔗</a></h3>
+<p>In VS Code with the project's folder opened in a container, initiate the Poetry project and create a virtual environment. Make sure you are in the <code>pyconfme</code> project root directory. In there run the Poetry init command that will bootstrap all configuration files.</p>
+<div class="highlight"><pre><span></span><code>poetry init
+</code></pre></div>
+<p>Answer the questions of the project creation wizard to create an initial <code>pyproject.toml</code> file:</p>
+<div class="highlight"><pre><span></span><code>Package name [pyconfme]: &lt;ENTER&gt;
+Version [0.1.0]:  0.0.0 &lt;ENTER&gt;
+Description []: Configuration options with multiple config-files and command-line made easy when creating applications with Python Click. &lt;ENTER&gt;
+Author [John Doe &lt;john.doe@internet.com&gt;: &lt;ENTER&gt;
+License []: MIT &lt;ENTER&gt;
+Compatible Python versions [^3.9]: &lt;ENTER&gt;
+Would you like to define your main dependencies interactively? (yes/no) [yes] no &lt;ENTER&gt;
+Would you like to define your development dependencies interactively? (yes/no) [yes] no &lt;ENTER&gt;
+Do you confirm generation? (yes/no) [yes] &lt;ENTER&gt;
+</code></pre></div>
+<p>Then add from command-line all production dependencies.</p>
+<ul>
+<li><a href="https://pydantic-docs.helpmanual.io/">pydantic</a> Data validation and settings management using python type annotations.</li>
+<li><a href="https://click.palletsprojects.com/en/8.0.x/">click</a> Command Line Interface Creation Kit</li>
+<li><a href="https://github.com/theskumar/python-dotenv">python-dotenv</a> Reads key-value pairs from a .env file and can set them as environment variables</li>
+<li><a href="https://pyyaml.org/">PyYAML</a> YAML framework</li>
+<li><a href="https://github.com/uiri/toml">toml</a> Parsing and creating TOML</li>
+</ul>
+<div class="highlight"><pre><span></span><code>poetry add pydantic click python-dotenv pyyaml toml
+</code></pre></div>
+<p>Add all the development dependencies needed for testing, documentation and code review.</p>
+<ul>
+<li><a href="https://github.com/nat-n/poethepoet">poethepoet</a> A task runner that works well with poetry</li>
+<li><a href="https://www.pylint.org/">pylint</a> Python linter</li>
+<li><a href="https://github.com/psf/black">black</a> The uncompromising Python code formatter</li>
+<li><a href="http://www.mypy-lang.org/">mypy</a> static type checker for Python</li>
+<li><a href="https://docs.pytest.org/">pytest</a> (Unit) Test Framework</li>
+<li><a href="https://github.com/pytest-dev/pytest-cov">pytest-cov</a> Coverage plugin for pytest.</li>
+<li><a href="https://github.com/pytest-dev/pytest-html">pytest-html</a> Plugin for generating HTML reports for pytest results</li>
+<li><a href="https://hypothesis.works/">hypothesis</a> Fuzzy-testing for pytest</li>
+<li><a href="https://www.mkdocs.org/">mkdocs</a> Project documentation with Markdown</li>
+<li><a href="https://squidfunk.github.io/mkdocs-material/">mkdocs-material</a> Material design for mkdocs</li>
+<li><a href="https://github.com/cmacmackin/markdown-include/">markdown-include</a> Provides syntax for Python-Markdown which allows for the inclusion of the contents of other Markdown documents</li>
+<li><a href="https://github.com/apenwarr/mkdocs-exclude">mkdocs-exclude</a> A mkdocs plugin that lets you exclude files or trees from your output</li>
+<li><a href="https://mkdocstrings.github.io/">mkdocstrings</a> Automatic documentation from sources, for MkDocs</li>
+<li><a href="https://github.com/oprypin/mkdocs-gen-files">mkdocs-gen-files</a> MkDocs plugin to programmatically generate documentation pages during the build</li>
+<li><a href="https://github.com/zhaoterryy/mkdocs-pdf-export-plugin/">mkdocs-pdf-export-plugin</a> An MkDocs plugin to export content pages as PDF files</li>
+<li><a href="https://github.com/fralau/mkdocs-mermaid2-plugin">mkdocs-mermaid2-plugin</a> A Mermaid graphs plugin for mkdocs</li>
+<li><a href="https://github.com/pawamoy/mkdocs-coverage">mkdocs-coverage</a> MkDocs plugin to integrate your coverage HTML report into your site</li>
+<li><a href="https://asciinema.org/">asciinema</a> recording terminal sessions</li>
+<li><a href="https://github.com/jimporter/mike">mike</a> Manage multiple versions of your MkDocs-powered documentation via Git</li>
+</ul>
+<div class="highlight"><pre><span></span><code>poetry add --dev poethepoet pylint black mypy pytest pytest-cov pytest-html hypothesis mkdocs mkdocs-material markdown-include mkdocs-exclude mkdocstrings mkdocs-gen-files mkdocs-pdf-export-plugin mkdocs-mermaid2-plugin mkdocs-coverage asciinema mike
+</code></pre></div>
+<div class="admonition note">
+<p>The above commands install all dependencies inside the VS Code container. Also the virtualenv resides inside the container. This is to encapsulate
+the dependencies, specifically to not clutter the host system with large directory trees. However, this requires re-installing all
+dependencies with <code>poetry init</code>, if you rebuild the container, which may take long. If you prefer to keep the dependencies on the
+host-system, you need to create the virtualenv managed by Poetry inside the project's directory. To instruct Poetry to do so,
+run <code>poetry config virtualenvs.in-project true</code>. See <a href="https://python-poetry.org/docs/configuration/#virtualenvsin-project">Poetry documentation</a>.</p>
+</div>
+<h3 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">🔗</a></h3>
+<p>To configure all development dependencies, add to the <code>pyproject.toml</code> file the following sections.</p>
+<p>Configuring <em>pytest</em> output formatting and register plugins (<em>doctest</em>-plugin to test code in Python docstrings
+and <em>coverage</em> plugin to measure test-coverage).</p>
+<div class="highlight"><pre><span></span><code><span class="k">[tool.pytest.ini_options]</span>
+<span class="n">log_cli</span> <span class="o">=</span> <span class="kc">true</span>
+<span class="n">log_cli_level</span> <span class="o">=</span> <span class="s">&quot;DEBUG&quot;</span>
+<span class="n">log_cli_format</span> <span class="o">=</span> <span class="s">&quot;%(asctime)s [%(levelname)8s] %(message)s (%(filename)s:%(lineno)s)&quot;</span>
+<span class="n">log_cli_date_format</span> <span class="o">=</span> <span class="s">&quot;%Y-%m-%d %H:%M:%S&quot;</span>
+<span class="n">addopts</span> <span class="o">=</span> <span class="s">&quot;--doctest-modules&quot;</span>
+
+<span class="k">[tool.pytest]</span>
+<span class="n">addopts</span> <span class="o">=</span> <span class="s">&quot;--cov=$(pwd) --cov-report html&quot;</span>
+</code></pre></div>
+<p>Configuring <em>coverage</em> plugin to include the source-code directory only (and not eg the test-directory or
+and existing virtual-environment).</p>
+<div class="highlight"><pre><span></span><code><span class="k">[tool.coverage.paths]</span>
+<span class="n">source</span> <span class="o">=</span> <span class="p">[</span> <span class="s">&quot;pyconfme&quot;</span> <span class="p">]</span>
+
+<span class="k">[tool.coverage.run]</span>
+<span class="n">omit</span> <span class="o">=</span> <span class="p">[</span> <span class="s">&quot;tests/*&quot;</span><span class="p">,</span> <span class="s">&quot;.venv/*&quot;</span> <span class="p">]</span>
+</code></pre></div>
+<p>Configuring <em>pylint</em> maximum line-length.</p>
+<div class="highlight"><pre><span></span><code><span class="k">[tool.pylint]</span>
+<span class="n">max-line-length</span> <span class="o">=</span> <span class="mi">88</span>
+</code></pre></div>
+<p>Configuring <em>black</em> code formatter to same line-length as <em>pylint</em> and to some common-sense include/exclude rules.</p>
+<div class="highlight"><pre><span></span><code><span class="k">[tool.black]</span>
+<span class="n">experimental-string-processing</span> <span class="o">=</span> <span class="kc">true</span>
+<span class="n">line-length</span> <span class="o">=</span> <span class="mi">88</span>
+<span class="n">target-version</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;py39&#39;</span><span class="p">]</span>
+<span class="n">include</span> <span class="o">=</span> <span class="s">&#39;\.pyi?$&#39;</span>
+<span class="n">exclude</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;</span>
+
+<span class="s">(</span>
+<span class="s">  /(</span>
+<span class="s">      \.eggs         # exclude a few common directories in the</span>
+<span class="s">    | \.git          # root of the project</span>
+<span class="s">    | \.hg</span>
+<span class="s">    | \.mypy_cache</span>
+<span class="s">    | \.tox</span>
+<span class="s">    | \.venv</span>
+<span class="s">    | _build</span>
+<span class="s">    | buck-out</span>
+<span class="s">    | build</span>
+<span class="s">    | dist</span>
+<span class="s">  )/</span>
+<span class="s">  | foo.py           # also separately exclude a file named foo.py in</span>
+<span class="s">                     # the root of the project</span>
+<span class="s">)</span>
+<span class="s">&#39;&#39;&#39;</span>
+</code></pre></div>
+<p>Configure <em>poethepoet</em> task runner extension with some convenience commands.</p>
+<ul>
+<li><code>poe t</code> for running tests</li>
+<li><code>poe covtest</code> for running tests including coverage measurement</li>
+<li><code>poe covreport</code> to get html-coverage report from latest coverage measurement</li>
+<li><code>poe ct</code> to run both sequentially, tests including coverage measurement and coverage report creation</li>
+<li><code>poe db</code> to (re-)build the documentation using the <code>_VERSION</code> variable to determine documentation version</li>
+<li><code>poe d</code> serve documentation locally with <em>mike</em>'s test-server. Go to <a href="http://localhost:8000">http://localhost:8000</a> in your local browser</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">[tool.poe.env]</span>
+<span class="n">_VERSION</span> <span class="o">=</span> <span class="s">&quot;v0.1.0&quot;</span>
+
+<span class="k">[tool.poe.tasks]</span>
+<span class="n">t</span> <span class="o">=</span> <span class="s">&quot;pytest&quot;</span>
+<span class="n">covtest</span> <span class="o">=</span> <span class="s">&quot;coverage run -m pytest&quot;</span>
+<span class="n">covreport</span> <span class="o">=</span> <span class="s">&quot;coverage html&quot;</span>
+<span class="n">ct</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;covtest&quot;</span><span class="p">,</span> <span class="s">&quot;covreport&quot;</span><span class="p">]</span>
+<span class="n">db</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span><span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;mike deploy $_VERSION&quot;</span><span class="p">},</span> 
+        <span class="p">{</span><span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;mike set-default $_VERSION&quot;</span><span class="p">},</span> 
+        <span class="p">{</span><span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;mike alias $_VERSION latest&quot;</span><span class="p">}</span>
+    <span class="p">]</span>
+<span class="n">d</span> <span class="o">=</span> <span class="s">&quot;mike serve&quot;</span>
+<span class="n">clean</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">rm -rf .coverage</span>
+<span class="s">       html_cov</span>
+<span class="s">       .mypy_cache</span>
+<span class="s">       .pytest_cache</span>
+<span class="s">       .hypothesis</span>
+<span class="s">       dist</span>
+<span class="s">       site</span>
+<span class="s">       ./**/__pycache__</span>
+<span class="s">&quot;&quot;&quot;</span>
+</code></pre></div>
+<h2 id="documentation">Documentation<a class="headerlink" href="#documentation" title="Permanent link">🔗</a></h2>
+<h3 id="general_1">General<a class="headerlink" href="#general_1" title="Permanent link">🔗</a></h3>
+<p>Documentation is build using <a href="https://www.mkdocs.org/">mkdocs</a> static page generator with several plugins which allow versioning, integration of docstring comments and deploying to <a href="https://docs.github.com/en/github/working-with-github-pages/getting-started-with-github-pages">Github pages</a>. The advantages of this approach are greater flexibility in page setup and design, integration of docstring comments and examples and simple local preview.</p>
+<p>The main plugins are:</p>
+<ul>
+<li>For design, search and navigation: <a href="https://squidfunk.github.io/mkdocs-material/getting-started/">mkdocs-material</a></li>
+<li>For integration of docstring comments: <a href="https://github.com/mkdocstrings/mkdocstrings">mkdoc-strings</a></li>
+<li>For versioning: <a href="https://github.com/jimporter/mike">mike</a></li>
+</ul>
+<h3 id="setup_1">Setup<a class="headerlink" href="#setup_1" title="Permanent link">🔗</a></h3>
+<p>The documentation creation with <em>mkdocs</em> is managed through the config file <code>mkdocs.yml</code>, which contains general site-parameters
+(eg. title, theme), site structure and plugin-configuration.</p>
+<p>Initial <code>mkdocs.yml</code> content:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">site_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">pyconfme</span>
+<span class="nt">site_description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Configuration options with multiple config-files and command-line made easy when creating applications with [Python Click](https://click.palletsprojects.com).</span>
+<span class="nt">strict</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="nt">site_url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://bnaard.github.io/pyconfme/</span>
+
+<span class="nt">theme</span><span class="p">:</span>
+  <span class="nt">name</span><span class="p">:</span> <span class="s">&#39;material&#39;</span>
+  <span class="nt">custom_dir</span><span class="p">:</span> <span class="s">&#39;docs/theme&#39;</span>
+  <span class="nt">palette</span><span class="p">:</span>
+    <span class="nt">primary</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">blue</span>
+    <span class="nt">accent</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">blue</span>
+<span class="c1">#  logo: &#39;logo-white.svg&#39;</span>
+<span class="c1">#  favicon: &#39;favicon.png&#39;</span>
+
+<span class="nt">repo_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bnaard/oyconfme</span>
+<span class="nt">repo_url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://github.com/bnaard/pyconfme</span>
+
+<span class="nt">nav</span><span class="p">:</span>
+<span class="p p-Indicator">-</span> <span class="nt">Overview</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">index.md</span>
+
+
+<span class="nt">markdown_extensions</span><span class="p">:</span>
+<span class="p p-Indicator">-</span> <span class="nt">markdown_include.include</span><span class="p">:</span>
+    <span class="nt">base_path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">docs</span>
+<span class="p p-Indicator">-</span> <span class="nt">toc</span><span class="p">:</span>
+    <span class="nt">permalink</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">🔗</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">pymdownx.highlight</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">pymdownx.extra</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">admonition</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">pymdownx.details</span>
+<span class="p p-Indicator">-</span> <span class="nt">pymdownx.superfences</span><span class="p">:</span>
+      <span class="nt">custom_fences</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mermaid</span>
+          <span class="nt">class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mermaid</span>
+          <span class="nt">format</span><span class="p">:</span> <span class="kt">!!python/name:pymdownx.superfences.fence_div_format</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">pymdownx.emoji</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">pymdownx.magiclink</span>
+<span class="p p-Indicator">-</span> <span class="nt">pymdownx.snippets</span><span class="p">:</span>
+    <span class="nt">check_paths</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">pymdownx.tabbed</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">pymdownx.tasklist</span>
+
+
+<span class="nt">plugins</span><span class="p">:</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">search</span>
+<span class="c1"># - pdf-export</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">autorefs</span>
+<span class="p p-Indicator">-</span> <span class="nt">coverage</span><span class="p">:</span>
+    <span class="nt">page_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">coverage</span>  <span class="c1"># default</span>
+    <span class="nt">html_report_dir</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">htmlcov</span>
+<span class="p p-Indicator">-</span> <span class="nt">mkdocstrings</span><span class="p">:</span>
+    <span class="nt">handlers</span><span class="p">:</span>
+        <span class="nt">python</span><span class="p">:</span>
+          <span class="nt">rendering</span><span class="p">:</span>
+            <span class="nt">show_root_heading</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">no</span> 
+            <span class="nt">show_category_heading</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">no</span>
+            <span class="nt">show_if_no_docstring</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>     
+<span class="p p-Indicator">-</span> <span class="nt">exclude</span><span class="p">:</span>
+    <span class="nt">glob</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">_build/*</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">build/*</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">examples/*</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">requirements.txt</span>
+
+<span class="nt">extra</span><span class="p">:</span>
+  <span class="nt">version</span><span class="p">:</span>
+    <span class="nt">provider</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mike</span>
+
+<span class="nt">extra_css</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">stylesheets/asciinema-player.css</span>
+<span class="nt">extra_javascript</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">javascripts/asciinema-player.js</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">https://unpkg.com/mermaid/dist/mermaid.min.js</span>
+</code></pre></div>
+<p>Manually add the JavaScript and CSS static assets for <a href="https://github.com/asciinema/asciinema-player">asciinema-player</a> as
+it is not distrubuted on a CDN at the time of writing this.</p>
+<ul>
+<li>Download <code>asciinema-player.min.js</code> from <a href="https://github.com/asciinema/asciinema-player/releases">Asciinema releases page</a> and store in <code>.\docs\javascripts</code></li>
+<li>Download <code>asciinema-player.css</code> from <a href="https://github.com/asciinema/asciinema-player/releases">Asciinema releases page</a> and
+store in <code>.\docs\stylesheets</code></li>
+</ul>
+<div class="admonition note">
+<p>This dependency has to be manually updated as it is not managed through <em>poetry</em>.</p>
+</div>
+<h3 id="github-hosting">Github Hosting<a class="headerlink" href="#github-hosting" title="Permanent link">🔗</a></h3>
+<p>We use Github for serving the static build of the documentation websites. For that, GitHub <em>Pages</em> have to be enabled and
+our configuration has to ensure that Github does not try to use its standard-renderer <a href="https://jekyllrb.com/">jekyll</a> to build
+our documentation. Instead, we instruct Github to serve pages <em>as is</em> without rendering.</p>
+<p>To do so, we first enable Guthub pages, then we disable the standard renderer <em>jekyll</em>.</p>
+<p>Create a dedicated branch for the built documentation:</p>
+<ul>
+<li>in Github webinterface create a new branch <code>gh-pages</code> from <code>main</code> branch</li>
+</ul>
+<p>To enable Github pages:</p>
+<ul>
+<li>go to Github repository web-interface</li>
+<li>go to <em>Settings</em> tab</li>
+<li>select <em>Pages</em> in the left box</li>
+<li>select as <em>Source</em> the branch <em>gh-pages</em> and select <code>\root</code> as folder</li>
+<li>click <em>Save</em> and ignore for now that Github reports that the documentation build fails</li>
+</ul>
+<p>Instruct Github to not use standard renderer <em>jekyll</em>:</p>
+<ul>
+<li>place an empty file named <code>.nojekyll</code> in the root directory of the built documentation</li>
+</ul>
+<p>All productive documentation is hosted on <code>gh-pages</code>-branch of this repository. This is automatically managed and overwritten by the <em>mkdoc</em>-tools mentioned above. So, do not edit manually the <code>gh-pages</code>-branch as all your changes will be overwritten and lost on next documentation auto-build+deploy.</p>
+<h2 id="github-actions">Github Actions<a class="headerlink" href="#github-actions" title="Permanent link">🔗</a></h2>
+<p><em>build</em> (here: a pipeline of linting and running all tests) and <em>docs</em> (here: document creation with <em>mkdocs</em>) are implemented as Github actions.</p>
+<p>Both actions are setup in Github webinterface.</p>
+<p>Initial content <code>build.yml</code></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># This workflow will install Python dependencies, run tests and lint with a variety of Python versions</span>
+<span class="c1"># For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions</span>
+
+<span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Build</span>
+
+<span class="nt">on</span><span class="p">:</span>
+  <span class="nt">push</span><span class="p">:</span>
+    <span class="nt">branches</span><span class="p">:</span> <span class="p p-Indicator">[</span> <span class="nv">main</span> <span class="p p-Indicator">]</span>
+  <span class="nt">pull_request</span><span class="p">:</span>
+    <span class="nt">branches</span><span class="p">:</span> <span class="p p-Indicator">[</span> <span class="nv">main</span> <span class="p p-Indicator">]</span>
+
+<span class="nt">jobs</span><span class="p">:</span>
+  <span class="nt">build</span><span class="p">:</span>
+
+    <span class="nt">runs-on</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+    <span class="nt">strategy</span><span class="p">:</span>
+      <span class="nt">matrix</span><span class="p">:</span>
+        <span class="nt">python-version</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">3.7</span><span class="p p-Indicator">,</span> <span class="nv">3.8</span><span class="p p-Indicator">,</span> <span class="nv">3.9</span><span class="p p-Indicator">]</span>
+
+    <span class="nt">steps</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">uses</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">actions/checkout@v2</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Set up Python ${{ matrix.python-version }}</span>
+      <span class="nt">uses</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">actions/setup-python@v2</span>
+      <span class="nt">with</span><span class="p">:</span>
+        <span class="nt">python-version</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${{ matrix.python-version }}</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Install dependencies</span>
+      <span class="nt">run</span><span class="p">:</span> <span class="p p-Indicator">|</span>
+        <span class="no">python -m pip install --upgrade pip</span>
+        <span class="no">python -m pip install poetry</span>
+        <span class="no">poetry config virtualenvs.in-project true</span>
+        <span class="no">poetry install</span>
+        <span class="no"># if [ -f requirements.txt ]; then pip install -r requirements.txt; fi</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Lint with pylint</span>
+      <span class="nt">run</span><span class="p">:</span> <span class="p p-Indicator">|</span>
+        <span class="no">python lint.py --path ./pyconfme --threshold 2</span>
+      <span class="nt">continue-on-error</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Test with pytest</span>
+      <span class="nt">run</span><span class="p">:</span> <span class="p p-Indicator">|</span>
+        <span class="no">./.venv/bin/pytest --doctest-modules --html=test-results-${{ matrix.python-version }}.html --cov-report=html --cov=./pyconfme/ .</span>
+      <span class="nt">continue-on-error</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Upload pytest test results</span>
+      <span class="nt">uses</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">actions/upload-artifact@v2</span>
+      <span class="nt">with</span><span class="p">:</span>
+        <span class="nt">path</span><span class="p">:</span> <span class="p p-Indicator">|</span> 
+          <span class="no">test-results-${{ matrix.python-version }}.html</span>
+          <span class="no">assets/*</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Upload test coverage results</span>
+      <span class="nt">uses</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">actions/upload-artifact@v2</span>
+      <span class="nt">with</span><span class="p">:</span>
+        <span class="nt">path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">./htmlcov</span>  
+      <span class="c1"># Use always() to always run this step to publish test results when there are test failures</span>
+      <span class="nt">if</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${{ always() }}</span>
+</code></pre></div>
+<p>Initial content <code>docs.yml</code></p>
+<div class="highlight"><pre><span></span><code><span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Docs</span>
+
+<span class="nt">on</span><span class="p">:</span>
+  <span class="nt">push</span><span class="p">:</span>
+    <span class="nt">branches</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">main</span>
+
+<span class="nt">jobs</span><span class="p">:</span>
+  <span class="nt">deploy</span><span class="p">:</span>
+    <span class="nt">runs-on</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ubuntu-18.04</span>
+    <span class="nt">strategy</span><span class="p">:</span>
+      <span class="nt">matrix</span><span class="p">:</span>
+        <span class="nt">python-version</span><span class="p">:</span> <span class="p p-Indicator">[</span> <span class="s">&#39;3.9&#39;</span> <span class="p p-Indicator">]</span>
+
+    <span class="nt">steps</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">uses</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">actions/checkout@v2</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Set up Python ${{ matrix.python-version }}</span>
+      <span class="nt">uses</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">actions/setup-python@v2</span>
+      <span class="nt">with</span><span class="p">:</span>
+        <span class="nt">python-version</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${{ matrix.python-version }}</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Install dependencies</span>
+      <span class="nt">run</span><span class="p">:</span> <span class="p p-Indicator">|</span>
+        <span class="no">python -m pip install --upgrade pip</span>
+        <span class="no">python -m pip install poetry</span>
+        <span class="no">poetry config virtualenvs.in-project true</span>
+        <span class="no">poetry install</span>
+
+    <span class="p p-Indicator">-</span> <span class="nt">uses</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">actions-ecosystem/action-get-latest-tag@v1</span>
+      <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">get-latest-tag</span>
+      <span class="nt">with</span><span class="p">:</span>
+        <span class="nt">semver_only</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+
+    <span class="p p-Indicator">-</span> <span class="nt">run</span><span class="p">:</span> <span class="p p-Indicator">|</span>
+        <span class="no">export PATH=&quot;$PATH:$PWD/.venv/bin&quot;</span>
+        <span class="no">git config --global user.name &quot;$(git --no-pager log --format=format:&#39;%an&#39; -n 1)&quot;</span>
+        <span class="no">git config --global user.email &quot;$(git --no-pager log --format=format:&#39;%ae&#39; -n 1)&quot;</span>
+        <span class="no">mike deploy --update-aliases ${{ steps.get-latest-tag.outputs.tag }} latest</span>
+        <span class="no">mike set-default latest</span>
+
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Deploy</span>
+      <span class="nt">uses</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">peaceiris/actions-gh-pages@v3</span>
+      <span class="nt">with</span><span class="p">:</span>
+        <span class="nt">github_token</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${{ secrets.GITHUB_TOKEN }}</span>
+        <span class="nt">publish_dir</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">./site</span>
+</code></pre></div>
+<p>The Github action described in <code>.github/workflows/docs.yml</code> is based on <a href="https://github.com/peaceiris/actions-gh-pages">GitHub Actions for GitHub Pages</a>, which builds and deploys <em>mkdoc</em> page structures and takes care that Github is serving those <em>as is</em> instead of using Jekyll.</p>
+<p>In the Github actions, the latest version is retrieved using <a href="https://github.com/marketplace/actions/actions-ecosystem-action-get-latest-tag">get-latest-tag</a> to build the latest documentation.</p>
+<p>While documentation updates including documentation versions on Github are automatically done based on latest tag information (see <code>.github/workflows/Docs.yml</code>), you need to run the following to locally build and serve the versioned documentation for preview on <a href="https://localhost:8000">https://localhost:8000</a>:</p>
+<div class="highlight"><pre><span></span><code>mike deploy --update-aliases <span class="m">0</span>.1.0 latest   <span class="c1"># replace 0.1.0 manually with the current version from pyconfme/__init__.py</span>
+mike set-default latest
+mike serve
+</code></pre></div>
+<div class="admonition note">
+<p>You have to run both commands to get a proper redirect to the latest documentation on <a href="https://localhost:8000">https://localhost:8000</a>. Refer to <a href="https://squidfunk.github.io/mkdocs-material/setup/setting-up-versioning/">mkdocs-material documentation</a> and to <a href="https://github.com/jimporter/mike#usage">mike documentation</a> for details.</p>
+</div>
+<div class="admonition note">
+<p>Instead of running <code>mike deploy</code> manually, you can use the <em>poethepoet</em> actions described earlier.</p>
+</div>
+<p>Create a test-build of the documentation by changing into the virtual-environment and then using the <em>poe</em> build task for the documentation.</p>
+<div class="highlight"><pre><span></span><code>poetry shell
+poe db
+</code></pre></div>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href=".." class="md-footer__link md-footer__link--prev" aria-label="Previous: Overview" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Overview
+            </div>
+          </div>
+        </a>
+      
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.ca141e46.min.js", "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.6baa0517.min.js"></script>
+      
+        <script src="../javascripts/asciinema-player.js"></script>
+      
+        <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+      
+    
+  </body>
+</html>
