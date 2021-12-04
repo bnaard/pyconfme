@@ -17,17 +17,17 @@ repo_url: https://github.com/bnaard/pyconfme
 
 nav:
 - Overview: index.md
-- Install: install.md
-- Usage:
-    - Settings Management: usage/settings.md
-- Reference: 
-  - Configuration: reference/config.md
-  - Factory: reference/factory.md
-- Contributing: contributing.md
-- Changelog: changelog.md
+#- Install: install.md
+#- Usage:
+#    - Settings Management: usage/settings.md
+#- Reference: 
+#  - Configuration: reference/config.md
+#  - Factory: reference/factory.md
+#- Contributing: contributing.md
+#- Changelog: changelog.md
 - Development: development.md
-- License: license.md
-- Coverage report: coverage.md
+#- License: license.md
+#- Coverage report: coverage.md
 
 
 markdown_extensions:
@@ -56,9 +56,9 @@ plugins:
 - search
 # - pdf-export
 - autorefs
-- coverage:
-    page_name: coverage  # default
-    html_report_dir: htmlcov
+# - coverage:
+#     page_name: coverage  # default
+#     html_report_dir: htmlcov
 - mkdocstrings:
     handlers:
         python:

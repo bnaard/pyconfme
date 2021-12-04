@@ -183,7 +183,7 @@ devcontainer.json
     ],
 
     // Use 'forwardPorts' to make a list of ports inside the container available locally.
-    // "forwardPorts": [],
+    "forwardPorts": [8000],
 
     // Use 'postCreateCommand' to run commands after the container is created.
     // "postCreateCommand": "pip3 install --user -r requirements.txt",
@@ -519,6 +519,118 @@ Instruct Github to not use standard renderer _jekyll_:
 - place an empty file named `.nojekyll` in the root directory of the built documentation
 
 All productive documentation is hosted on `gh-pages`-branch of this repository. This is automatically managed and overwritten by the _mkdoc_-tools mentioned above. So, do not edit manually the `gh-pages`-branch as all your changes will be overwritten and lost on next documentation auto-build+deploy.
+
+## Github Actions
+
+_build_ (here: a pipeline of linting and running all tests) and _docs_ (here: document creation with _mkdocs_) are implemented as Github actions.
+
+Both actions are setup in Github webinterface.
+
+Initial content `build.yml`
+
+```yaml
+# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.7, 3.8, 3.9]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install poetry
+        poetry config virtualenvs.in-project true
+        poetry install
+        # if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Lint with pylint
+      run: |
+        python lint.py --path ./pyconfme --threshold 2
+      continue-on-error: true
+    - name: Test with pytest
+      run: |
+        ./.venv/bin/pytest --doctest-modules --html=test-results-${{ matrix.python-version }}.html --cov-report=html --cov=./pyconfme/ .
+      continue-on-error: true
+    - name: Upload pytest test results
+      uses: actions/upload-artifact@v2
+      with:
+        path: | 
+          test-results-${{ matrix.python-version }}.html
+          assets/*
+    - name: Upload test coverage results
+      uses: actions/upload-artifact@v2
+      with:
+        path: ./htmlcov  
+      # Use always() to always run this step to publish test results when there are test failures
+      if: ${{ always() }}
+```
+
+Initial content `docs.yml`
+
+```yaml
+name: Docs
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        python-version: [ '3.9' ]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install poetry
+        poetry config virtualenvs.in-project true
+        poetry install
+
+    - uses: actions-ecosystem/action-get-latest-tag@v1
+      id: get-latest-tag
+      with:
+        semver_only: true
+
+    - run: |
+        export PATH="$PATH:$PWD/.venv/bin"
+        git config --global user.name "$(git --no-pager log --format=format:'%an' -n 1)"
+        git config --global user.email "$(git --no-pager log --format=format:'%ae' -n 1)"
+        mike deploy --update-aliases ${{ steps.get-latest-tag.outputs.tag }} latest
+        mike set-default latest
+
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./site
+```
 
 The Github action described in `.github/workflows/docs.yml` is based on [GitHub Actions for GitHub Pages](https://github.com/peaceiris/actions-gh-pages), which builds and deploys _mkdoc_ page structures and takes care that Github is serving those _as is_ instead of using Jekyll.
 
