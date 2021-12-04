@@ -12,7 +12,7 @@ theme:
 #  logo: 'logo-white.svg'
 #  favicon: 'favicon.png'
 
-repo_name: bnaard/oyconfme
+repo_name: bnaard/pyconfme
 repo_url: https://github.com/bnaard/pyconfme
 
 nav:
