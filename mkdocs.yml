@@ -1,0 +1,85 @@
+site_name: pyconfme
+site_description: Configuration options with multiple config-files and command-line made easy when creating applications with [Python Click](https://click.palletsprojects.com).
+strict: true
+site_url: https://bnaard.github.io/pyconfme/
+
+theme:
+  name: 'material'
+  custom_dir: 'docs/theme'
+  palette:
+    primary: blue
+    accent: blue
+#  logo: 'logo-white.svg'
+#  favicon: 'favicon.png'
+
+repo_name: bnaard/oyconfme
+repo_url: https://github.com/bnaard/pyconfme
+
+nav:
+- Overview: index.md
+- Install: install.md
+- Usage:
+    - Settings Management: usage/settings.md
+- Reference: 
+  - Configuration: reference/config.md
+  - Factory: reference/factory.md
+- Contributing: contributing.md
+- Changelog: changelog.md
+- Development: development.md
+- License: license.md
+- Coverage report: coverage.md
+
+
+markdown_extensions:
+- markdown_include.include:
+    base_path: docs
+- toc:
+    permalink: 🔗
+- pymdownx.highlight
+- pymdownx.extra
+- admonition
+- pymdownx.details
+- pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_div_format
+- pymdownx.emoji
+- pymdownx.magiclink
+- pymdownx.snippets:
+    check_paths: true
+- pymdownx.tabbed
+- pymdownx.tasklist
+
+
+plugins:
+- search
+# - pdf-export
+- autorefs
+- coverage:
+    page_name: coverage  # default
+    html_report_dir: htmlcov
+- mkdocstrings:
+    handlers:
+        python:
+          rendering:
+            show_root_heading: no 
+            show_category_heading: no
+            show_if_no_docstring: yes     
+- exclude:
+    glob:
+    - _build/*
+    - build/*
+    - examples/*
+    - requirements.txt
+# - mermaid2
+
+extra:
+  version:
+    provider: mike
+
+extra_css:
+  - stylesheets/asciinema-player.css
+extra_javascript:
+  - javascripts/asciinema-player.js
+  - https://unpkg.com/mermaid/dist/mermaid.min.js
