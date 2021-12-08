@@ -23,12 +23,16 @@
 		"python.formatting.autopep8Path": "/usr/local/py-utils/bin/autopep8",
 		"python.formatting.blackPath": "/usr/local/py-utils/bin/black",
 		"python.formatting.yapfPath": "/usr/local/py-utils/bin/yapf",
+		"python.formatting.provider": "black",
 		"python.linting.banditPath": "/usr/local/py-utils/bin/bandit",
 		"python.linting.flake8Path": "/usr/local/py-utils/bin/flake8",
 		"python.linting.mypyPath": "/usr/local/py-utils/bin/mypy",
 		"python.linting.pycodestylePath": "/usr/local/py-utils/bin/pycodestyle",
 		"python.linting.pydocstylePath": "/usr/local/py-utils/bin/pydocstyle",
-		"python.linting.pylintPath": "/usr/local/py-utils/bin/pylint"
+		// don't set path explicitly but rely on `python -m pylint` working so that
+		// it finds pylint in currently active virtualenv
+		// https://stackoverflow.com/questions/60030017/vscode-path-to-the-pylint-linter-is-invalid
+		// "python.linting.pylintPath": "/usr/local/py-utils/bin/pylint"
 	},
 
 	// Add the IDs of extensions you want installed when the container is created.
@@ -49,7 +53,7 @@
 	"forwardPorts": [8000],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "pip3 install --user -r requirements.txt",
+	//"postCreateCommand": "poetry config virtualenvs.create true && poetry config virtualenvs.in-project true",
 
 	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
 	"remoteUser": "vscode"

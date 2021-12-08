@@ -1,0 +1,9 @@
+{
+    "main": "started",
+    "runserver": {
+        "nested_list": [
+            42,
+            96
+        
+    }
+}

@@ -10,7 +10,6 @@ RUN if [ "${NODE_VERSION}" != "none" ]; then su vscode -c "umask 0002 && . /usr/
 
 # Install dependency/virtual-environment-management tool
 RUN pip install poetry
-RUN poetry config virtualenvs.create true
 
 # [Optional] Uncomment this section to install additional OS packages.
 # RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
