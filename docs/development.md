@@ -16,7 +16,6 @@ We assume a Mac-computer with latest macOS installed (at the time of writing thi
 6. _Visual Studio Code_ plugins:
     - [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
     - [Beautify](https://marketplace.visualstudio.com/items?itemName=HookyQR.beautify)
-    - [Bracket Pair Colorizer 2](https://marketplace.visualstudio.com/items?itemName=CoenraadS.bracket-pair-colorizer-2)
     - [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
     - [GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens)
     - [PrintCode](https://marketplace.visualstudio.com/items?itemName=nobuhito.printcode)
@@ -29,9 +28,9 @@ We assume a Mac-computer with latest macOS installed (at the time of writing thi
     - [vscode-icons](https://marketplace.visualstudio.com/items?itemName=vscode-icons-team.vscode-icons)
     - [Even Better TOML](https://marketplace.visualstudio.com/items?itemName=tamasfe.even-better-toml)
     - [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client)
-    - [Markdown Preview Mermaid Support](https://marketplace.visualstudio.com/items?itemName=vstirbu.vscode-mermaid-preview)
+    - [Markdown Preview Mermaid Support](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-mermaid)
 
-Check diagramming support with [Mermaid](https://mermaid-js.github.io/mermaid/#/) for markdown (in VS Code preview) by testing with the following mardown code:  
+Check diagramming support with [Mermaid](https://mermaid-js.github.io/mermaid/#/) for markdown (in VS Code preview) by testing with the following markdown code:  
 
 <!-- markdownlint-disable MD033 -->
 <pre>```mermaid
@@ -51,7 +50,7 @@ graph TD;
     C-->D;
 ```
 
-Preview the markdown in VSCode on macOS eihter by pressing `Command+Shift+V` (on Windows `CTRL+Shift+V`) or by showing side-by-side with `Command+K V` (on Windows `CTRL+K V`).
+Preview the markdown in VSCode on macOS either by pressing `Command+Shift+V` (on Windows `CTRL+Shift+V`) or by showing side-by-side with `Command+K V` (on Windows `CTRL+K V`).
 
 Note: A good [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
 
@@ -168,7 +167,9 @@ devcontainer.json
         // don't set path explicitly but rely on `python -m pylint` working so that
         // it finds pylint in currently active virtualenv
         // https://stackoverflow.com/questions/60030017/vscode-path-to-the-pylint-linter-is-invalid
-        // "python.linting.pylintPath": "/usr/local/py-utils/bin/pylint"
+        // "python.linting.pylintPath": "/usr/local/py-utils/bin/pylint",
+        "editor.bracketPairColorization.enabled": true,
+        "editor.guides.bracketPairs":"active",
     },
 
     // Add the IDs of extensions you want installed when the container is created.

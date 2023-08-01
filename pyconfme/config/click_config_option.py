@@ -1,13 +1,14 @@
-import click
-from pydantic import BaseSettings, ValidationError
+"""This module defines a decorator that provides an out-of-the box `--config`-option for click-commands."""
+
 from typing import Sequence, TypeVar, Dict, cast
 from pathlib import Path
 from functools import partial
 
+import click
+from pydantic import BaseSettings, ValidationError
 
 from ..utility.dict_deep_update import dict_deep_update
 from .config_file_loaders import DictLoadError, load_dict_from_file
-# from .config_data_types import ConfigDataTypes
 
 SettingsClassType = TypeVar("SettingsClassType", bound=BaseSettings)
 
@@ -20,7 +21,7 @@ def _validate(
     settings_class_type: SettingsClassType,
 ):
     if not value:
-        return list()
+        return []
     if not isinstance(value, Sequence):
         value = [value]
     config_map = {}
@@ -28,10 +29,10 @@ def _validate(
         config_file = Path(config_file).resolve()
         try:
             config_map[str(config_file)] = load_dict_from_file(config_file)
-        except DictLoadError as e:
+        except DictLoadError as ex:
             click.echo(
-                f"{e.message}\nContext:\n{e.document}\nPosition = {e.position},"
-                f" line number = {e.line_number}, column_number = {e.column_number}"
+                f"{ex.message}\nContext:\n{ex.document}\nPosition = {ex.position},"
+                f" line number = {ex.line_number}, column_number = {ex.column_number}"
             )
             ctx.abort()
 
@@ -42,19 +43,19 @@ def _validate(
             dict_deep_update(
                 target_config_dict, cast(Dict[object, object], config_dict)
             )
-        except RecursionError as e:
+        except RecursionError as ex:
             click.echo(
-                f"Error reading {config_file}.\nData structure depth exceeded.\n{e}"
+                f"Error reading {config_file}.\nData structure depth exceeded.\n{ex}"
             )
             ctx.abort()
-        except ValueError as e:
-            click.echo(f"{e}")
+        except ValueError as ex:
+            click.echo(f"{ex}")
             ctx.abort()
 
         try:
             new_settings_obj = settings_class_type.parse_obj(target_config_dict)
-        except ValidationError as e:
-            click.echo(f"Validation error for config file {config_file}.\n{e}")
+        except ValidationError as ex:
+            click.echo(f"Validation error for config file {config_file}.\n{ex}")
             ctx.abort()
 
     ctx.default_map = new_settings_obj.dict()
