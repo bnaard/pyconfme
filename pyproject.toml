@@ -33,6 +33,7 @@ mkdocs-coverage = "^0.2.4"
 asciinema = "^2.1.0"
 mike = "^1.1.2"
 mypy = "^0.910"
+class-doc = "^0.2.6"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -54,8 +55,8 @@ source = [ "pyconfme" ]
 [tool.coverage.run]
 omit = [ "tests/*", ".venv/*" ]
 
-[tool.pylint]
-max-line-length = 88
+[tool.pylint.FORMAT]
+max-line-length = 120
 
 [tool.black]
 experimental-string-processing = true

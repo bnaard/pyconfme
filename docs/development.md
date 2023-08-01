@@ -16,7 +16,6 @@ We assume a Mac-computer with latest macOS installed (at the time of writing thi
 6. _Visual Studio Code_ plugins:
     - [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
     - [Beautify](https://marketplace.visualstudio.com/items?itemName=HookyQR.beautify)
-    - [Bracket Pair Colorizer 2](https://marketplace.visualstudio.com/items?itemName=CoenraadS.bracket-pair-colorizer-2)
     - [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
     - [GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens)
     - [PrintCode](https://marketplace.visualstudio.com/items?itemName=nobuhito.printcode)
@@ -29,9 +28,9 @@ We assume a Mac-computer with latest macOS installed (at the time of writing thi
     - [vscode-icons](https://marketplace.visualstudio.com/items?itemName=vscode-icons-team.vscode-icons)
     - [Even Better TOML](https://marketplace.visualstudio.com/items?itemName=tamasfe.even-better-toml)
     - [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client)
-    - [Markdown Preview Mermaid Support](https://marketplace.visualstudio.com/items?itemName=vstirbu.vscode-mermaid-preview)
+    - [Markdown Preview Mermaid Support](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-mermaid)
 
-Check diagramming support with [Mermaid](https://mermaid-js.github.io/mermaid/#/) for markdown (in VS Code preview) by testing with the following mardown code:  
+Check diagramming support with [Mermaid](https://mermaid-js.github.io/mermaid/#/) for markdown (in VS Code preview) by testing with the following markdown code:  
 
 <!-- markdownlint-disable MD033 -->
 <pre>```mermaid
@@ -51,7 +50,7 @@ graph TD;
     C-->D;
 ```
 
-Preview the markdown in VSCode on macOS eihter by pressing `Command+Shift+V` (on Windows `CTRL+Shift+V`) or by showing side-by-side with `Command+K V` (on Windows `CTRL+K V`).
+Preview the markdown in VSCode on macOS either by pressing `Command+Shift+V` (on Windows `CTRL+Shift+V`) or by showing side-by-side with `Command+K V` (on Windows `CTRL+K V`).
 
 Note: A good [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
 
@@ -131,7 +130,6 @@ FROM mcr.microsoft.com/vscode/devcontainers/python:0-${VARIANT}
 
 # Install dependency/virtual-environment-management tool
 RUN pip install poetry
-RUN poetry config virtualenvs.create true
 ```
 
 devcontainer.json
@@ -160,12 +158,18 @@ devcontainer.json
         "python.formatting.autopep8Path": "/usr/local/py-utils/bin/autopep8",
         "python.formatting.blackPath": "/usr/local/py-utils/bin/black",
         "python.formatting.yapfPath": "/usr/local/py-utils/bin/yapf",
+        "python.formatting.provider": "black",
         "python.linting.banditPath": "/usr/local/py-utils/bin/bandit",
         "python.linting.flake8Path": "/usr/local/py-utils/bin/flake8",
         "python.linting.mypyPath": "/usr/local/py-utils/bin/mypy",
         "python.linting.pycodestylePath": "/usr/local/py-utils/bin/pycodestyle",
         "python.linting.pydocstylePath": "/usr/local/py-utils/bin/pydocstyle",
-        "python.linting.pylintPath": "/usr/local/py-utils/bin/pylint"
+        // don't set path explicitly but rely on `python -m pylint` working so that
+        // it finds pylint in currently active virtualenv
+        // https://stackoverflow.com/questions/60030017/vscode-path-to-the-pylint-linter-is-invalid
+        // "python.linting.pylintPath": "/usr/local/py-utils/bin/pylint",
+        "editor.bracketPairColorization.enabled": true,
+        "editor.guides.bracketPairs":"active",
     },
 
     // Add the IDs of extensions you want installed when the container is created.
@@ -186,7 +190,8 @@ devcontainer.json
     "forwardPorts": [8000],
 
     // Use 'postCreateCommand' to run commands after the container is created.
-    // "postCreateCommand": "pip3 install --user -r requirements.txt",
+    // setc poetry configuration to creating virtual enviornment in project directory (ie on host file system)
+    "postCreateCommand": "poetry config virtualenvs.create true && poetry config virtualenvs.in-project true",
 
     // Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
     "remoteUser": "vscode"
@@ -242,6 +247,12 @@ Would you like to define your development dependencies interactively? (yes/no) [
 Do you confirm generation? (yes/no) [yes] <ENTER>
 ```
 
+Create and change into a virtual environment:
+
+```bash
+poetry shell
+```
+
 Then add from command-line all production dependencies.
 
 - [pydantic](https://pydantic-docs.helpmanual.io/) Data validation and settings management using python type annotations.
@@ -280,12 +291,11 @@ Add all the development dependencies needed for testing, documentation and code 
 poetry add --dev poethepoet pylint black mypy pytest pytest-cov pytest-html hypothesis mkdocs mkdocs-material markdown-include mkdocs-exclude mkdocstrings mkdocs-gen-files mkdocs-pdf-export-plugin mkdocs-mermaid2-plugin mkdocs-coverage asciinema mike
 ```
 
-!!! note ""
-    The above commands install all dependencies inside the VS Code container. Also the virtualenv resides inside the container. This is to encapsulate
-    the dependencies, specifically to not clutter the host system with large directory trees. However, this requires re-installing all
-    dependencies with `poetry init`, if you rebuild the container, which may take long. If you prefer to keep the dependencies on the
-    host-system, you need to create the virtualenv managed by Poetry inside the project's directory. To instruct Poetry to do so,
-    run `poetry config virtualenvs.in-project true`. See [Poetry documentation](https://python-poetry.org/docs/configuration/#virtualenvsin-project).
+The above commands install all dependencies inside the container in a virtualenv created poetry. This is to encapsulate
+the dependencies, specifically to not clutter the host system with large directory trees. However, this requires re-installing all
+dependencies with `poetry init`, if you rebuild the container, which may take long. If you prefer to keep the dependencies on the
+host-system, you need to create the virtualenv managed by Poetry inside the project's directory. To instruct Poetry to do so,
+run `poetry config virtualenvs.in-project true`. See [Poetry documentation](https://python-poetry.org/docs/configuration/#virtualenvsin-project).
 
 ### Configuration
 
