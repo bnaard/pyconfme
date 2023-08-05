@@ -9,8 +9,8 @@ import sys
 
 
 from pyconfme.config.config_data_types import ConfigDataTypes
-from pyconfme.config.config_file_loaders import (
-    DictLoadError,
+from pyconfme.config.config_exceptions import DictLoadError
+from pyconfme.config.pydantic_settings_loader import (
     _settings_config_load,
     get_settings_config_load_function,
 )

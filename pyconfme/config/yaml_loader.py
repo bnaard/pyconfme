@@ -7,7 +7,7 @@ import yaml
 
 from .config_data_types import ConfigDataTypes
 from .config_exceptions import DictLoadError
-from ..utility.typing import Buffer
+from ..utility.type_helpers import Buffer
 
 
 

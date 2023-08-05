@@ -10,7 +10,7 @@ from .config_exceptions import DictLoadError
 from .json_loader import _load_dict_from_json_stream_or_file
 from .toml_loader import _load_dict_from_toml_stream_or_file    # pyright: ignore[reportMissingImports]
 from .yaml_loader import _load_dict_from_yaml_stream_or_file    # pyright: ignore[reportMissingImports]
-from ..utility.typing import FilePathOrBuffer
+from ..utility.type_helpers import FilePathOrBuffer
 
 
 MAX_CONFIG_FILE_SIZE = 1024 * 1024 * 1024
@@ -36,8 +36,9 @@ def _determine_config_file_type(file_path: Union[Path, str]) -> ConfigDataTypes:
     Example:
     ```python
     >>> from pyconfme.config.config_loader import _determine_config_file_type
-    >>> _determine_config_file_type("my_config.ini")
-    <ConfigDataTypes.toml: 'toml'>
+    >>> file_type = _determine_config_file_type("my_config.ini")
+    >>> str(file_type)
+    'ConfigDataTypes.toml'
 
     ```
     """
@@ -210,7 +211,7 @@ def load_dict_from_file(
         message=(
             f"Format of config data {str(file_path)} (type {type(file_path)}) could not"
             " be determined to be one of"
-            f" [{', '.join(ConfigDataTypes.allowed_names())}]."
+            f" [{', '.join( [e.name for e in ConfigDataTypes] )}]."
         ),
         document=file_path.read_text() if isinstance(file_path, Path) else file_path.read(),  # type: ignore
         position=0,

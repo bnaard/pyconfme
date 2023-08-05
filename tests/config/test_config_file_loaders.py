@@ -4,15 +4,16 @@ from hypothesis import given, strategies as st
 from string import printable
 from io import StringIO
 import mmap
+import os
 
 from pyconfme.config.config_data_types import ConfigDataTypes
-from pyconfme.config.config_file_loaders import (
-    DictLoadError,
+from pyconfme.config.config_exceptions import DictLoadError
+from pyconfme.config.json_loader import _load_dict_from_json_stream_or_file
+from pyconfme.config.toml_loader import _load_dict_from_toml_stream_or_file
+from pyconfme.config.yaml_loader import _load_dict_from_yaml_stream_or_file
+from pyconfme.config.config_loader import (
     _determine_config_file_type,
     load_dict_from_file,
-    _load_dict_from_json_stream_or_file,
-    _load_dict_from_toml_stream_or_file,
-    _load_dict_from_yaml_stream_or_file,
 )
 
 
@@ -37,9 +38,13 @@ def test_determine_config_data_type(file_path, resulting_type):
     assert _determine_config_file_type(file_path) == resulting_type
 
 
+# BUG 
+# mmap.mmap returns OSError 22 on VSCode Devcontainers /Podman even if used as per documentation https://docs.python.org/3/library/mmap.html
+# mmap'ed files are currently not tested  
 def _get_mmap(file_path):
     f = open(file_path, "r+b")
-    return mmap.mmap(f.fileno(), 0)
+    return f
+#     return mmap.mmap(fileno=f.fileno(), length=os.fstat(f.fileno()).st_size, access=mmap.ACCESS_READ)  # https://bugs.python.org/issue40785
 
 
 @pytest.mark.parametrize(
