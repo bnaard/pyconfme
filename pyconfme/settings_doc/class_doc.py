@@ -8,7 +8,7 @@ import ast
 import more_itertools as mitertools
 
 from .type_helpers import UniversalAssign
-from .ast_tools import _is_advanced_ast_available, _ASTToolsExtendedAST, _ASTTools
+from .ast_tools import _is_advanced_ast_available, _ASTToolsExtendedAST, _ASTTools   # pyright: ignore[reportMissingImports]
 
 
 _ast_tools = _ASTToolsExtendedAST if _is_advanced_ast_available() else _ASTTools
