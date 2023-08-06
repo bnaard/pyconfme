@@ -10,7 +10,7 @@ from .config_exceptions import DictLoadError
 from .json_loader import _load_dict_from_json_stream_or_file
 from .toml_loader import _load_dict_from_toml_stream_or_file    # pyright: ignore[reportMissingImports]
 from .yaml_loader import _load_dict_from_yaml_stream_or_file    # pyright: ignore[reportMissingImports]
-from ..utility.type_helpers import FilePathOrBuffer
+from .type_helpers import FilePathOrBuffer
 
 
 MAX_CONFIG_FILE_SIZE = 1024 * 1024 * 1024

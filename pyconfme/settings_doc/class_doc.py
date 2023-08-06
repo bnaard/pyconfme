@@ -6,17 +6,17 @@ import string
 import textwrap
 import tokenize
 from typing import Dict, List, Optional, Union, Iterator, Any
+import ast
 
 import more_itertools as mitertools
 
-import ast
+from .type_helpers import UniversalAssign
 
 
-def _test_advanced_ast_presence() -> bool:
-    return len({'end_lineno', 'end_col_offset'} & set(ast.ClassDef._attributes)) > 0
-
-
-UniversalAssign = Union[ast.Assign, ast.AnnAssign]
+# This function checks whether the ast.ClassDef class has either the 'end_lineno' or 'end_col_offset' attribute and returns True if at least one of them is present, otherwise False. The purpose of this function seems to be to verify if advanced AST features are available in the current version of the Python interpreter.
+def _is_advanced_ast_available() -> bool:
+    # Check if either 'end_lineno' or 'end_col_offset' attribute exists in ast.ClassDef
+    return hasattr(ast.ClassDef, 'end_lineno') or hasattr(ast.ClassDef, 'end_col_offset')
 
 
 _WHITESPACES = set(string.whitespace)
@@ -92,7 +92,8 @@ class _ASTTools:
                 if op.string in matching_brackets:
                     return consume_between_bracers(iterable, op.string)
             # should never occurs because this lines already parsed and validated
-            raise ValueError(f'no closing bracket for bracket of type "{bracket_type}"')
+            raise ValueError(
+                f'no closing bracket for bracket of type "{bracket_type}"')
 
         # find last node
         if node.value is None:
@@ -146,7 +147,7 @@ class _ASTTools:
         comment_line_start = leading_whitespaces + '#:'
 
         return list(
-            line[len(comment_line_start) :].strip()
+            line[len(comment_line_start):].strip()
             for line in itertools.takewhile(
                 lambda line: line.startswith(comment_line_start),
                 reversed(lines[: node.lineno - 1]),
@@ -179,10 +180,10 @@ class _ASTToolsExtendedAST:
         if comment_marker_pos == -1:
             return None
 
-        return node_line[comment_marker_pos + 2 :].strip()
+        return node_line[comment_marker_pos + 2:].strip()
 
 
-_ast_tools = _ASTToolsExtendedAST if _test_advanced_ast_presence() else _ASTTools
+_ast_tools = _ASTToolsExtendedAST if _is_advanced_ast_available() else _ASTTools
 
 
 def _get_assign_targets(node: UniversalAssign) -> Iterator[str]:
@@ -270,6 +271,7 @@ def extract_docs_from_cls_obj(cls: Any):
 
     tree = ast.parse(text).body[0]
     if not isinstance(tree, ast.ClassDef):
-        raise TypeError(f'Expecting "{ast.ClassDef.__name__}", but "{cls}" is received')
+        raise TypeError(
+            f'Expecting "{ast.ClassDef.__name__}", but "{cls}" is received')
 
     return extract_docs(lines, tree)

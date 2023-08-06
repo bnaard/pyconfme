@@ -8,7 +8,7 @@ import toml
 
 from .config_data_types import ConfigDataTypes
 from .config_exceptions import DictLoadError
-from ..utility.type_helpers import Buffer, mmap
+from .type_helpers import Buffer, mmap
 
 
 def _load_dict_from_toml_stream_or_file(

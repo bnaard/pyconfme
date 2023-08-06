@@ -10,7 +10,7 @@ from pyconfme.settings_doc.class_doc import (
     extract_docs,
     extract_all_nodes_comments,
     extract_docs_from_cls_obj,
-    _test_advanced_ast_presence,
+    _is_advanced_ast_available,
 )
 
 
@@ -24,7 +24,7 @@ def test_python_after_38():
 # @mark.xfail
 def test_advance_ast_avaliable():
     """Reports whether advanced AST available or not"""
-    assert _test_advanced_ast_presence()
+    assert _is_advanced_ast_available()
 
 
 def cls_func(kwarg=None):

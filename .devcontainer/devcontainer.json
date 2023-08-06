@@ -9,28 +9,29 @@
 		"ghcr.io/devcontainers-contrib/features/flake8:2": {},
 		"ghcr.io/devcontainers-contrib/features/pylint:2": {}
 	},
-
-    "customizations": {
-        "vscode": {
-            "extensions": [
-                "eamodio.gitlens",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"eamodio.gitlens",
 				"tamasfe.even-better-toml",
 				"davidanson.vscode-markdownlint",
 				"redhat.vscode-yaml",
 				"bierner.markdown-mermaid",
-				"gruntfuggly.todo-tree"				
-            ]
-        }
-    },
-
-	"forwardPorts": [8000],
-	"postStartCommand": [ 
+				"gruntfuggly.todo-tree"
+			]
+		}
+	},
+	"forwardPorts": [
+		8000
+	],
+	"postStartCommand": [
 		"poetry config virtualenvs.in-project true"
 	],
-	"runArgs": ["--userns=keep-id:uid=1000,gid=1000"],
-    "containerUser": "vscode",
-    "containerEnv": {
-        "HOME": "/home/vscode"
-    }
+	"runArgs": [
+		"--userns=keep-id:uid=1000,gid=1000"
+	],
+	"containerUser": "vscode",
+	"containerEnv": {
+		"HOME": "/home/vscode"
+	}
 }
-

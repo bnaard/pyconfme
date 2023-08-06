@@ -9,7 +9,7 @@ from pydantic import BaseSettings
 from .config_data_types import ConfigDataTypes
 from .config_exceptions import DictLoadError
 from .config_loader import load_dict_from_file  # pyright: ignore[reportMissingImports]
-from ..utility.type_helpers import FilePathOrBuffer
+from .type_helpers import FilePathOrBuffer
 from ..utility.dict_deep_update import dict_deep_update
 
 
