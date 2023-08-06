@@ -1,8 +1,8 @@
-# from https://github.com/danields761/pydantic-settings
+# from https://github.com/danields761/pydantic-settings (no license applied)
 
 from typing import Callable, Optional, Type, TypeVar, Union, overload
 
-from class_doc import extract_docs_from_cls_obj
+from .class_doc import extract_docs_from_cls_obj
 
 # from pydantic_settings.types import AnyPydanticModel, is_pydantic_dataclass
 

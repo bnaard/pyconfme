@@ -27,7 +27,3 @@ def test_config_data_types():
         yaml = ConfigDataTypes.unknown
     except Exception as e:
         pytest.fail( f"Testing ConfigDataTypes.unknown raised exception {e}.")
-
-
-
-    # assert set(ConfigDataTypes.allowed_names()) == set(["json", "toml", "yaml", "infer", "unknown"])

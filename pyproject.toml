@@ -1,14 +1,13 @@
 [tool.poetry]
 name = "pyconfme"
-version = "0.0.0"
-description = "Configuration options with multiple config-files and command-line made easy when creating applications with Python Click."
+version = "0.0.1"
+description = "Pydantic-powered configuration options with multiple config-files and command-line made easy when creating command-line applications."
 authors = ["bnaard <bnaard@gmx.net>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.9"
 pydantic = "^1.8.2"
-click = "^8.0.3"
 python-dotenv = "^0.19.2"
 PyYAML = "^6.0"
 toml = "^0.10.2"
