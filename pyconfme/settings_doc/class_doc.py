@@ -8,10 +8,11 @@ import ast
 import more_itertools as mitertools
 
 from .type_helpers import UniversalAssign
-from .ast_tools import _is_advanced_ast_available, _ASTToolsExtendedAST, _ASTTools   # pyright: ignore[reportMissingImports]
+# from .ast_tools import _is_advanced_ast_available, _ASTToolsExtendedAST, _ASTTools   # pyright: ignore[reportMissingImports]
+from .ast_tools import ASTToolsBase, ASTTools, ASTToolsExtendedAST           # pyright: ignore[reportMissingImports]
 
-
-_ast_tools = _ASTToolsExtendedAST if _is_advanced_ast_available() else _ASTTools
+# _ast_tools = _ASTToolsExtendedAST if _is_advanced_ast_available() else _ASTTools
+_ast_tools = ASTToolsExtendedAST if ASTToolsBase._is_advanced_ast_available() else ASTTools
 
 
 def _get_assign_targets(node: UniversalAssign) -> Iterator[str]:

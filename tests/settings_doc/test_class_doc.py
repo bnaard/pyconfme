@@ -10,8 +10,10 @@ from pyconfme.settings_doc.class_doc import (
     extract_docs,
     extract_all_nodes_comments,
     extract_docs_from_cls_obj,
-    _is_advanced_ast_available,
+#    _is_advanced_ast_available,
 )
+
+from pyconfme.settings_doc.ast_tools import ASTToolsBase
 
 
 # @mark.xfail
@@ -24,7 +26,7 @@ def test_python_after_38():
 # @mark.xfail
 def test_advance_ast_avaliable():
     """Reports whether advanced AST available or not"""
-    assert _is_advanced_ast_available()
+    assert ASTToolsBase._is_advanced_ast_available()
 
 
 def cls_func(kwarg=None):
