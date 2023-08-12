@@ -2,6 +2,7 @@
 
 import ast
 import inspect
+from typing import List
 
 from pytest import mark
 
@@ -13,7 +14,7 @@ from pyconfme.settings_doc.class_doc import (
 #    _is_advanced_ast_available,
 )
 
-from pyconfme.settings_doc.ast_tools import ASTToolsBase
+from pyconfme.settings_doc.ast_tools import _test_advanced_ast_presence, count_neighbor_newlines
 
 
 # @mark.xfail
@@ -26,7 +27,7 @@ def test_python_after_38():
 # @mark.xfail
 def test_advance_ast_avaliable():
     """Reports whether advanced AST available or not"""
-    assert ASTToolsBase._is_advanced_ast_available()
+    assert _test_advanced_ast_presence()
 
 
 def cls_func(kwarg=None):
@@ -177,7 +178,7 @@ def test_attr_docstring_extraction():
 def test_neigborhood_lines_counter(first, second, res):
     from class_doc import _ast_tools
 
-    assert _ast_tools.count_neighbor_newlines(FOO_LINES, first, second) == res
+    assert count_neighbor_newlines(FOO_LINES, first, second) == res
 
 
 def inner_func():

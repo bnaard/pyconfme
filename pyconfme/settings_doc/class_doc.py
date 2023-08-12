@@ -9,10 +9,8 @@ import more_itertools as mitertools
 
 from .type_helpers import UniversalAssign
 # from .ast_tools import _is_advanced_ast_available, _ASTToolsExtendedAST, _ASTTools   # pyright: ignore[reportMissingImports]
-from .ast_tools import ASTToolsBase, ASTTools, ASTToolsExtendedAST           # pyright: ignore[reportMissingImports]
+from .ast_tools import extract_definition_line_comment, extract_prev_node_comments, count_neighbor_newlines            # pyright: ignore[reportMissingImports]
 
-# _ast_tools = _ASTToolsExtendedAST if _is_advanced_ast_available() else _ASTTools
-_ast_tools = ASTToolsExtendedAST if ASTToolsBase._is_advanced_ast_available() else ASTTools
 
 
 def _get_assign_targets(node: UniversalAssign) -> Iterator[str]:
@@ -28,15 +26,17 @@ def _get_assign_targets(node: UniversalAssign) -> Iterator[str]:
 
 def extract_node_comments(lines: List[str], node: UniversalAssign) -> List[str]:
     # firstly prioritize "after assignment comment"
-    res = _ast_tools.extract_definition_line_comment(lines, node)
+    res = extract_definition_line_comment(lines, node)
     if res is not None:
         return [res]
 
     # then try to extract "right before assignment" comments
-    return _ast_tools.extract_prev_node_comments(lines, node)
+    return extract_prev_node_comments(lines, node)
 
 
-def extract_all_nodes_comments(lines: List[str], cls_def: ast.ClassDef) -> Dict[str, List[str]]:
+def extract_all_nodes_comments(
+    lines: List[str], cls_def: ast.ClassDef
+) -> Dict[str, List[str]]:
     return {
         target: comments
         for node, comments in (
@@ -49,15 +49,17 @@ def extract_all_nodes_comments(lines: List[str], cls_def: ast.ClassDef) -> Dict[
     }
 
 
-def extract_all_attr_docstrings(lines: List[str], cls_def: ast.ClassDef) -> Dict[str, List[str]]:
+def extract_all_attr_docstrings(
+    lines: List[str], cls_def: ast.ClassDef
+) -> Dict[str, List[str]]:
     return {
         target: comments
         for node, comments in (
-            (node, inspect.cleandoc(next_node.value.s).split("\n"))
+            (node, inspect.cleandoc(next_node.value.s).split('\n'))
             for node, next_node in mitertools.windowed(cls_def.body, 2)
             if isinstance(node, (ast.Assign, ast.AnnAssign))
             if isinstance(next_node, ast.Expr) and isinstance(next_node.value, ast.Str)
-            if _ast_tools.count_neighbor_newlines(lines, node, next_node) == 0
+            if count_neighbor_newlines(lines, node, next_node) == 0
         )
         for target in _get_assign_targets(node)
     }
@@ -91,7 +93,7 @@ def extract_docs_from_cls_obj(cls: Any):
     lines, _ = inspect.getsourcelines(cls)
 
     # dedent the text for a inner classes declarations
-    text = textwrap.dedent("".join(lines))
+    text = textwrap.dedent(''.join(lines))
     lines = text.splitlines(keepends=True)
 
     tree = ast.parse(text).body[0]

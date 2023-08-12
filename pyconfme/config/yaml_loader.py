@@ -7,7 +7,7 @@ import yaml
 
 from .config_data_types import ConfigDataTypes
 from .config_exceptions import DictLoadError
-from .type_helpers import Buffer
+from .config_types import Buffer  # pyright: ignore[reportMissingImports]
 
 
 

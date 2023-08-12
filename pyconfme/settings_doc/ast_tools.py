@@ -1,182 +1,175 @@
 
 # Adapted from original code from https://github.com/danields761/class-doc/blob/master/class_doc.py   no license applied
 
+
+import itertools
+import string
+import tokenize
+from typing import List, Optional, Union, Iterator, Any
+import more_itertools as mitertools
 import ast
-from typing import List, Optional, Iterator
 
-class ASTToolsBase:
+from .type_helpers import UniversalAssign
+
+
+
+# Remove log statements and unused variables
+def _test_advanced_ast_presence() -> bool:
+    """ 
+    Check if advanced ast is available. 
     """
-    Base class defining common routines for `ast` implementations.
+    return hasattr(ast.ClassDef, 'end_lineno') and hasattr(ast.ClassDef, 'end_col_offset')
+
+
+
+def _tokens_peekable_iter(lines: List[str]) -> mitertools.peekable:
+    lines_iter = iter(lines)
+    return mitertools.peekable(tokenize.generate_tokens(lambda: next(lines_iter)))
+
+
+def _get_first_lineno(node: ast.AST) -> int:
+    if isinstance(node, ast.Expr) and isinstance(node.value, ast.Str):
+        return node.lineno - node.value.s.count('\n')
+    return node.lineno
+
+
+def _take_until_node(
+    tokens: Iterator[tokenize.TokenInfo], node: ast.AST
+) -> Iterator[tokenize.TokenInfo]:
+    for tok in tokens:
+        yield tok
+        if (
+            tok.start[0] >= _get_first_lineno(node)
+            and tok.start[1] >= node.col_offset
+        ):
+            break
+
+def count_neighbor_newlines(
+    lines: List[str], first: ast.AST, second: ast.AST
+) -> int:
     """
+    Count only logical newlines between two nodes, e.g. any node may consist of
+    multiple lines, so you can't just take difference of `lineno` attribute, this
+    value will be pointless
 
-    @classmethod
-    def _is_advanced_ast_available(cls) -> bool:
-        """
-        Check whether the advanced AST features are available in the current version of the Python interpreter.
-
-        Returns:
-            bool: True if at least one of the 'end_lineno' or 'end_col_offset' attributes exists in ast.ClassDef,
-                  otherwise False.
-        """
-        return hasattr(ast.ClassDef, "end_lineno") or hasattr(ast.ClassDef, "end_col_offset")
-
-    @classmethod
-    def _tokens_peekable_iter(cls, lines: List[str]) -> Iterator[ast.AST]:
-        """
-        Create an iterator that generates tokens from the Python code using the `ast` module.
-
-        Args:
-            lines (List[str]): List of lines containing Python code.
-
-        Returns:
-            Iterator[ast.AST]: An iterator that generates AST nodes from the code.
-        """
-        return iter(ast.parse("".join(lines)).body)
-
-    @classmethod
-    def _get_first_lineno(cls, node: ast.AST) -> int:
-        """
-        Get the starting line number of the given AST node.
-
-        Args:
-            node (ast.AST): The AST node.
-
-        Returns:
-            int: The starting line number of the node.
-        """
-        if isinstance(node, ast.Expr) and isinstance(node.value, ast.Str):
-            return node.lineno - node.value.s.count("\n")
-        return node.lineno
-
-    @classmethod
-    def _take_until_node(cls, nodes: Iterator[ast.AST], target_node: ast.AST) -> Iterator[ast.AST]:
-        """
-        Yield nodes until the target node's starting position is reached.
-
-        Args:
-            nodes (Iterator[ast.AST]): An iterator of AST nodes.
-            target_node (ast.AST): The target AST node.
-
-        Yields:
-            Iterator[ast.AST]: The next AST node until the target node is reached.
-        """
-        for node in nodes:
-            yield node
-            if node.lineno >= cls._get_first_lineno(target_node) and node.col_offset >= target_node.col_offset:
-                break
-
-    @classmethod
-    def extract_prev_node_comments(cls, lines: List[str], node: ast.AST) -> List[str]:
-        """
-        Extract comments that appear above the given node.
-
-        Args:
-            lines (List[str]): List of lines containing Python code.
-            node (ast.AST): The AST node.
-
-        Returns:
-            List[str]: A list of comments found above the node.
-        """
-        line_start = lines[node.lineno - 1]
-        leading_whitespaces = line_start[:node.col_offset].lstrip()
-        comment_line_start = leading_whitespaces + "#:"
-
-        return [
-            line[len(comment_line_start):].strip()
-            for line in reversed(lines[:node.lineno - 1])
-            if line.startswith(comment_line_start)
-        ][::-1]
-
-    @classmethod
-    def extract_definition_line_comment(cls, lines: List[str], node: ast.AST) -> Optional[str]:
-        """
-        Extract a comment associated with the node's definition.
-
-        Args:
-            lines (List[str]): List of lines containing Python code.
-            node (ast.AST): The AST node.
-
-        Returns:
-            Optional[str]: The comment associated with the node's definition, or None if not found.
-        """
-        tokens_iter = cls._tokens_peekable_iter(lines)
-        for tok in cls._take_until_node(tokens_iter, node):
-            pass
-
-        try:
-            maybe_comment = next(tokens_iter)
-        except StopIteration:
-            return None
-
-        if isinstance(maybe_comment, ast.Expr) and isinstance(maybe_comment.value, ast.Str):
-            return maybe_comment.value.s.strip()
-        return None
-
-class ASTTools(ASTToolsBase):
+    :return: number of logical newlines (result will be 0 if second node is placed
+        right after first)
     """
-    Defines a set of routines for `ast` implementations where no information about node end position is tracked.
-    """
-
-    @classmethod
-    def count_neighbor_newlines(cls, lines: List[str], first: ast.AST, second: ast.AST) -> int:
-        """
-        Count logical newlines between two AST nodes.
-
-        Args:
-            lines (List[str]): List of lines containing Python code.
-            first (ast.AST): The first AST node.
-            second (ast.AST): The second AST node.
-
-        Returns:
-            int: The number of logical newlines between the two nodes.
-        """
-        tokens_iter = cls._tokens_peekable_iter(lines)
-        for tok in cls._take_until_node(tokens_iter, first):
-            pass
-
-        return (self._get_first_lineno(second) - self._get_first_lineno(first)) - sum(
-            1 for tok in cls._take_until_node(tokens_iter, second) if isinstance(tok, ast.Expr) and isinstance(tok.value, ast.Str)
+    if _test_advanced_ast_presence():
+        return second.lineno - first.end_lineno - 1
+    else:
+        tokens_iter = _tokens_peekable_iter(lines)
+        mitertools.consume(_take_until_node(tokens_iter, first))
+        return (_get_first_lineno(second) - _get_first_lineno(first)) - sum(
+            1
+            for tok in _take_until_node(tokens_iter, second)
+            if tok.type == tokenize.NEWLINE
         )
 
-class ASTToolsExtendedAST(ASTToolsBase):
-    """
-    Defines a set of routines for advanced `ast` implementation.
-    """
 
-    @classmethod
-    def count_neighbor_newlines(cls, lines: List[str], first: ast.AST, second: ast.AST) -> int:
-        """
-        Calculate the number of logical newlines between two AST nodes using their line numbers and end line numbers.
+def _extract_definition_line_comment_after_Python38(
+    lines: List[str], node: UniversalAssign
+) -> Optional[str]:
+    end_lineno = node.end_lineno - 1
+    end_col_offset = node.end_col_offset - 1
 
-        Args:
-            lines (List[str]): List of lines containing Python code.
-            first (ast.AST): The first AST node.
-            second (ast.AST): The second AST node.
+    node_line = lines[end_lineno]
+    comment_marker_pos = node_line.find('#:', end_col_offset)
+    if comment_marker_pos == -1:
+        return None
 
-        Returns:
-            int: The number of logical newlines between the two nodes.
-        """
-        return second.lineno - first.end_lineno - 1
+    return node_line[comment_marker_pos + 2 :].strip()
 
-    @classmethod
-    def extract_definition_line_comment(cls, lines: List[str], node: ast.AST) -> Optional[str]:
-        """
-        Extract a comment associated with the node's definition by searching for a comment marker (#:) on the same line as the end of the node's definition.
 
-        Args:
-            lines (List[str]): List of lines containing Python code.
-            node (ast.AST): The AST node.
 
-        Returns:
-            Optional[str]: The comment associated with the node's definition, or None if not found.
-        """
-        end_lineno = node.end_lineno - 1
-        end_col_offset = node.end_col_offset - 1
+def _extract_definition_line_comment_before_Python38(
+    lines: List[str], node: UniversalAssign
+) -> Optional[str]:
+    def valid_comment_or_none(comment):
+        if comment.startswith('#:'):
+            return comment[2:].strip()
+        return None
 
-        node_line = lines[end_lineno]
-        comment_marker_pos = node_line.find("#:", end_col_offset)
+    # will fetch all tokens until closing bracket of appropriate type occurs
+    #  recursively calls himself when new opening bracket detected
+    matching_brackets = {'{': '}', '[': ']', '(': ')'}
 
-        if comment_marker_pos == -1:
+    def consume_between_bracers(iterable, bracket_type: str):
+        closing_bracket = matching_brackets[bracket_type]
+        for op in iterable:
+            if op.string == closing_bracket:
+                return
+            if op.string in matching_brackets:
+                return consume_between_bracers(iterable, op.string)
+        # should never occurs because this lines already parsed and validated
+        raise ValueError(f'no closing bracket for bracket of type "{bracket_type}"')
+
+    # find last node
+    if node.value is None:
+        if not isinstance(node, ast.AnnAssign) or node.annotation is None:
             return None
+        last_node = node.annotation
+    else:
+        if (
+            isinstance(node.value, ast.Tuple)
+            and lines[node.value.lineno - 1][node.value.col_offset - 1] != '('
+        ):
+            last_node = node.value.elts[-1]
+        else:
+            last_node = node.value
 
-        return node_line[comment_marker_pos + 2:].strip()
+    tokens_iter = _tokens_peekable_iter(lines)
+
+    # skip tokens until first token of last node occurred
+    tokens_iter.prepend(
+        mitertools.last(_take_until_node(tokens_iter, last_node))
+    )
+
+    # skip all except newline (for \ escaped newlines NEWLINE token isn't emitted)
+    #  and comment token itself
+    for tok in tokens_iter:
+        if tok.type in (tokenize.COMMENT, tokenize.NEWLINE):
+            tokens_iter.prepend(tok)
+            break
+        if tok.type == tokenize.OP and tok.string in matching_brackets:
+            consume_between_bracers(tokens_iter, tok.string)
+
+    try:
+        maybe_comment = next(tokens_iter)
+    except StopIteration:
+        return None
+
+    if maybe_comment.type == tokenize.COMMENT:
+        return valid_comment_or_none(maybe_comment.string)
+
+    return None
+
+
+def extract_prev_node_comments(
+    lines: List[str], node: UniversalAssign
+) -> List[str]:
+    leading_whitespaces = ''.join(
+        itertools.takewhile(
+            lambda char: char in set(string.whitespace), lines[node.lineno - 1]
+        )
+    )
+    comment_line_start = leading_whitespaces + '#:'
+
+    return list(
+        line[len(comment_line_start) :].strip()
+        for line in itertools.takewhile(
+            lambda line: line.startswith(comment_line_start),
+            reversed(lines[: node.lineno - 1]),
+        )
+    )[::-1]
+
+
+def extract_definition_line_comment(
+    lines: List[str], node: UniversalAssign
+) -> Optional[str]:
+    if _test_advanced_ast_presence():
+        return _extract_definition_line_comment_after_Python38(lines, node)
+    else:   
+        return _extract_definition_line_comment_before_Python38(lines, node)
+
+
