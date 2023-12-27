@@ -1,13 +1,7 @@
 {
-	"name": "Python 3",
-	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/python:1-3.11-bullseye",
-	"features": {
-		"ghcr.io/devcontainers-contrib/features/pipx-package:1": {},
-		"ghcr.io/devcontainers-contrib/features/poetry:2": {},
-		"ghcr.io/devcontainers-contrib/features/black:2": {},
-		"ghcr.io/devcontainers-contrib/features/flake8:2": {},
-		"ghcr.io/devcontainers-contrib/features/pylint:2": {}
+	"name": "PyConfMe Dev",
+	"build": { 
+		"dockerfile": "dev.Dockerfile" 
 	},
 	"customizations": {
 		"vscode": {
@@ -18,24 +12,23 @@
 				"redhat.vscode-yaml",
 				"bierner.markdown-mermaid",
 				"gruntfuggly.todo-tree",
-				"ms-python.black-formatter",
-				"ms-python.autopep8",
+				"charliermarsh.ruff",
 				"stkb.rewrap",
-				"github.copilot",
-				"github.copilot-chat",
-				"github.copilot-labs"
+				// "github.copilot",
+				// "github.copilot-chat",
+				// "github.copilot-labs",
+				"anseki.vscode-color",
+				"vue.volar"
 			]
 		}
 	},
 	"forwardPorts": [
-		8000
 	],
 	"postStartCommand": [
-		"poetry config virtualenvs.in-project true"
 	],
-	"runArgs": [
-		"--userns=keep-id:uid=1000,gid=1000"
-	],
+	// "runArgs": [
+	// 	"--userns=keep-id:uid=1000,gid=1000"
+	// ],
 	"containerUser": "vscode",
 	"containerEnv": {
 		"HOME": "/home/vscode"
